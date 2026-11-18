@@ -1,0 +1,25 @@
+flowchart LR
+  U(["Navegador<br/>celular ou PC"])
+  subgraph FE["Front-end — VIEW"]
+    T["Templates Jinja2<br/>HTML5 semântico"]
+    CSS["style.css<br/>mobile-first"]
+    JS["app.js + utils.js<br/>máscaras, fetch, alertas"]
+  end
+  subgraph BE["Back-end Python/Flask"]
+    R["Router Flask<br/>Blueprints"]
+    subgraph CT["CONTROLLER"]
+      C1[vitrine] --- C2[carrinho] --- C3[checkout] --- C4[pedidos] --- C5[admin]
+    end
+    subgraph MD["MODEL"]
+      S["services/<br/>regras de negócio puras"]
+      M["models/<br/>acesso a dados (SQL parametrizado)"]
+    end
+  end
+  DB[("SQLite<br/>cupcakes.db")]
+  U -- "Requisição HTTP" --> R --> CT
+  CT -- dados --> MD
+  M --> DB
+  CT -- "contexto" --> T
+  T -- HTML --> U
+  CSS -.-> U
+  JS -. "JSON (frete, carrinho, painel)" .-> R

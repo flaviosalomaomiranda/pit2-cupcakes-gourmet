@@ -1,0 +1,89 @@
+erDiagram
+  CATEGORIA ||--o{ CUPCAKE : classifica
+  CUPCAKE ||--o{ ITEM_PEDIDO : "é vendido em"
+  CLIENTE ||--o{ PEDIDO : faz
+  ZONA_ENTREGA ||--o{ PEDIDO : atende
+  PEDIDO ||--|{ ITEM_PEDIDO : contem
+  PEDIDO ||--|| PAGAMENTO : "é pago por"
+  PEDIDO ||--|{ HISTORICO_STATUS : registra
+  CATEGORIA {
+    INTEGER id PK
+    TEXT nome UK
+    TEXT slug UK
+  }
+  CUPCAKE {
+    INTEGER id PK
+    INTEGER categoria_id FK
+    TEXT nome UK
+    TEXT descricao
+    TEXT ingredientes
+    TEXT alergenicos
+    INTEGER preco_centavos
+    TEXT cor_cobertura
+    INTEGER ativo
+  }
+  ZONA_ENTREGA {
+    INTEGER id PK
+    TEXT nome UK
+    INTEGER cep_inicio
+    INTEGER cep_fim
+    INTEGER valor_centavos
+    INTEGER prazo_minutos
+  }
+  CLIENTE {
+    INTEGER id PK
+    TEXT nome
+    TEXT telefone
+    TEXT email
+    TEXT criado_em
+  }
+  PEDIDO {
+    INTEGER id PK
+    TEXT codigo UK
+    INTEGER cliente_id FK
+    INTEGER zona_entrega_id FK
+    TEXT status
+    INTEGER embalagem_presente
+    TEXT mensagem_presente
+    INTEGER cep
+    TEXT logradouro
+    TEXT numero
+    TEXT bairro
+    TEXT complemento
+    INTEGER subtotal_centavos
+    INTEGER embalagem_centavos
+    INTEGER frete_centavos
+    INTEGER total_centavos
+    TEXT criado_em
+    TEXT atualizado_em
+  }
+  ITEM_PEDIDO {
+    INTEGER id PK
+    INTEGER pedido_id FK
+    INTEGER cupcake_id FK
+    INTEGER quantidade
+    INTEGER preco_unitario_centavos
+    INTEGER subtotal_centavos
+  }
+  PAGAMENTO {
+    INTEGER id PK
+    INTEGER pedido_id FK,UK
+    TEXT metodo
+    TEXT status
+    TEXT codigo_pix
+    TEXT cartao_final
+    TEXT motivo_recusa
+    TEXT expira_em
+    TEXT atualizado_em
+  }
+  HISTORICO_STATUS {
+    INTEGER id PK
+    INTEGER pedido_id FK
+    TEXT status
+    TEXT data_hora
+  }
+  USUARIO_ADMIN {
+    INTEGER id PK
+    TEXT usuario UK
+    TEXT senha_hash
+  }

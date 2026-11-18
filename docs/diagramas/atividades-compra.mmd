@@ -1,0 +1,24 @@
+flowchart TD
+  A([Início]) --> B[Navegar pela vitrine]
+  B --> C{Filtrar / buscar?}
+  C -- sim --> D[Aplicar categoria ou termo] --> B
+  C -- não --> E[Adicionar cupcake ao carrinho]
+  E --> F{Mais sabores?}
+  F -- sim --> B
+  F -- não --> G[Revisar carrinho: + / − / remover]
+  G --> H{Embalagem presente?}
+  H -- sim --> I[Marcar caixa e mensagem] --> J
+  H -- não --> J[Informar CEP]
+  J --> K{CEP na área de entrega?}
+  K -- não --> L[/"Desculpe, ainda não entregamos nesta região."/] --> J
+  K -- sim --> M[Preencher dados e endereço]
+  M --> N{Forma de pagamento}
+  N -- PIX --> O[Exibir QR Code + Copia e Cola<br/>validade 15 min]
+  O --> P{Pago em até 15 min?}
+  P -- não --> Q[Pedido CANCELADO] --> Z([Fim])
+  P -- sim --> R[Pedido RECEBIDO]
+  N -- Cartão --> S{Cartão aprovado?}
+  S -- não --> T[/"Pagamento não autorizado"/] --> N
+  S -- sim --> R
+  R --> U[Lojista: Em preparo → Saiu para entrega → Entregue]
+  U --> V[Cliente acompanha a linha do tempo] --> Z

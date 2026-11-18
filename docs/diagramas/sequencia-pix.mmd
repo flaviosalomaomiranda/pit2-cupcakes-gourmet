@@ -1,0 +1,34 @@
+sequenceDiagram
+  autonumber
+  actor C as Cliente
+  participant V as View (checkout.html)
+  participant CK as CheckoutController
+  participant SV as Services (validação, frete, pagamento)
+  participant PM as PedidoModel
+  participant DB as SQLite
+  participant G as Gateway PIX (simulado)
+  participant L as Painel do Lojista
+  C->>V: Clica "Confirmar e pagar" (PIX)
+  V->>CK: POST /checkout (dados + CSRF)
+  CK->>SV: validar_cliente(), validar_endereco()
+  alt dados inválidos
+    SV-->>CK: ValidacaoErro(campo)
+    CK-->>V: 422 + mensagem e campo destacado
+  else dados válidos
+    CK->>SV: calcular_frete(cep) / calcular_totais()
+    CK->>SV: gerar_pix_copia_e_cola(chave, total)
+    CK->>PM: criar_pedido(...)
+    PM->>DB: BEGIN → INSERT cliente, pedido, itens, pagamento, histórico → COMMIT
+    PM-->>CK: código do pedido
+    CK-->>C: redireciona para /pedido/{codigo}/pix
+    C->>G: paga no app do banco
+    G->>CK: aviso de pagamento (webhook — botão "Simular confirmação")
+    CK->>PM: confirmar_pix(codigo)
+    PM->>DB: UPDATE pagamento=APROVADO, pedido=RECEBIDO + histórico
+    CK-->>C: tela de acompanhamento "Pedido recebido"
+    L->>CK: GET /admin/api/resumo (a cada 15 s)
+    CK-->>L: total_pagos aumentou → alerta sonoro e visual
+  end
+  opt PIX não pago em 15 min
+    PM->>DB: pagamento=EXPIRADO, pedido=CANCELADO
+  end

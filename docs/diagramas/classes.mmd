@@ -1,0 +1,95 @@
+classDiagram
+  direction LR
+  class Categoria {
+    +int id
+    +str nome
+    +str slug
+  }
+  class Cupcake {
+    +int id
+    +str nome
+    +str descricao
+    +str ingredientes
+    +str alergenicos
+    +int precoCentavos
+    +str corCobertura
+    +bool ativo
+  }
+  class ZonaEntrega {
+    +int id
+    +str nome
+    +int cepInicio
+    +int cepFim
+    +int valorCentavos
+    +int prazoMinutos
+    +atende(cep) bool
+  }
+  class Cliente {
+    +int id
+    +str nome
+    +str telefone
+    +str email
+  }
+  class Pedido {
+    +int id
+    +str codigo
+    +StatusPedido status
+    +bool embalagemPresente
+    +str mensagemPresente
+    +Endereco endereco
+    +int subtotalCentavos
+    +int embalagemCentavos
+    +int freteCentavos
+    +int totalCentavos
+    +avancarStatus(novo)
+    +cancelar()
+  }
+  class ItemPedido {
+    +int quantidade
+    +int precoUnitarioCentavos
+    +int subtotalCentavos
+  }
+  class Pagamento {
+    +MetodoPagamento metodo
+    +StatusPagamento status
+    +str codigoPix
+    +str cartaoFinal
+    +datetime expiraEm
+    +confirmar()
+    +expirar()
+  }
+  class HistoricoStatus {
+    +StatusPedido status
+    +datetime dataHora
+  }
+  class UsuarioAdmin {
+    +str usuario
+    -str senhaHash
+    +autenticar(senha) bool
+  }
+  class Carrinho {
+    <<sessão>>
+    +dict itens
+    +adicionar(id, qtd)
+    +definir(id, qtd)
+    +remover(id)
+    +totalItens() int
+  }
+  class StatusPedido {
+    <<enumeration>>
+    AGUARDANDO_PAGAMENTO
+    RECEBIDO
+    EM_PREPARO
+    SAIU_PARA_ENTREGA
+    ENTREGUE
+    CANCELADO
+  }
+  Categoria "1" --> "0..*" Cupcake : classifica
+  Cliente "1" --> "0..*" Pedido : faz
+  ZonaEntrega "1" --> "0..*" Pedido : atende
+  Pedido "1" *-- "1..*" ItemPedido : contém
+  ItemPedido "0..*" --> "1" Cupcake : refere-se a
+  Pedido "1" *-- "1" Pagamento : é pago por
+  Pedido "1" *-- "1..*" HistoricoStatus : registra
+  Carrinho ..> Cupcake : referencia
+  Pedido --> StatusPedido

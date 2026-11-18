@@ -1,0 +1,13 @@
+flowchart LR
+  subgraph VER["Verificação (construímos certo?)"]
+    direction TB
+    R1[Requisitos<br/>US01–US12] --> R2[Análise<br/>UML] --> R3[Arquitetura<br/>MVC] --> R4[Código]
+  end
+  subgraph VAL["Validação (construímos a coisa certa?)"]
+    direction TB
+    T1[Teste unitário<br/>pytest + node:test] --> T2[Teste de integração<br/>Flask test client + SQLite] --> T3[Teste de sistema<br/>Playwright no navegador] --> T4[Teste de aceitação<br/>5 avaliadores]
+  end
+  R4 --> T1
+  R3 -. valida .- T2
+  R2 -. valida .- T3
+  R1 -. valida .- T4

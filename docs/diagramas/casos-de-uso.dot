@@ -1,0 +1,27 @@
+digraph CasosDeUso {
+  rankdir=LR; graph [fontname="Helvetica", fontsize=13, nodesep=0.25, ranksep=1.1, pad=0.3];
+  node [fontname="Helvetica", fontsize=12]; edge [arrowhead=none, color="#555555"];
+  Cliente [shape=none, label="", image="ator.png", imagescale=true, width=0.6, height=0.9, fixedsize=true, xlabel="Cliente"];
+  Lojista [shape=none, label="", image="ator.png", imagescale=true, width=0.6, height=0.9, fixedsize=true, xlabel="Lojista"];
+  Gateway [shape=box, style="rounded,filled", fillcolor="#f3f3f3", label="«sistema externo»\nGateway de Pagamento\n(simulado no MVP)"];
+  subgraph cluster_sistema {
+    label="Sistema Doce Nuvem Cupcakes Gourmet"; style="rounded"; color="#c2255c"; fontcolor="#c2255c"; fontsize=15;
+    node [shape=ellipse, style=filled, fillcolor="#fde4ec", color="#c2255c"];
+    UC01 [label="UC01\nVisualizar vitrine"];
+    UC02 [label="UC02\nFiltrar e buscar"];
+    UC03 [label="UC03\nVer detalhes e ingredientes"];
+    UC04 [label="UC04\nGerenciar carrinho"];
+    UC05 [label="UC05\nEscolher embalagem presente"];
+    UC06 [label="UC06\nCalcular frete por CEP"];
+    UC07 [label="UC07\nRealizar pagamento\ne fechar pedido"];
+    UC08 [label="UC08\nAcompanhar pedido"];
+    UC09 [label="UC09\nAutenticar lojista"];
+    UC10 [label="UC10\nGerenciar pedidos recebidos"];
+  }
+  Cliente -> {UC01 UC02 UC03 UC04 UC05 UC06 UC07 UC08};
+  UC02 -> UC01 [style=dashed, arrowhead=vee, label="«extend»", fontsize=10];
+  UC07 -> UC06 [style=dashed, arrowhead=vee, label="«include»", fontsize=10];
+  UC10 -> UC09 [style=dashed, arrowhead=vee, label="«include»", fontsize=10];
+  UC07 -> Gateway; UC09 -> Lojista [dir=none]; UC10 -> Lojista [dir=none];
+  {rank=same; Gateway; Lojista}
+}

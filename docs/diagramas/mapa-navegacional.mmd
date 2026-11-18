@@ -1,0 +1,18 @@
+flowchart TD
+  Home["/ Vitrine<br/>(busca + filtros)"]
+  Home --> Det["/cupcake/:id<br/>Detalhe e ingredientes"]
+  Home --> Car["/carrinho<br/>Carrinho, embalagem, frete"]
+  Det --> Car
+  Det --> Home
+  Car --> Home
+  Car --> Chk["/checkout<br/>Dados, endereço, pagamento"]
+  Chk --> Car
+  Chk -- PIX --> Pix["/pedido/:codigo/pix<br/>QR Code + Copia e Cola"]
+  Chk -- Cartão aprovado --> Acp["/pedido/:codigo<br/>Linha do tempo"]
+  Pix --> Acp
+  Home --> MP["/pedidos<br/>Meus pedidos / buscar código"]
+  MP --> Acp
+  Acp --> Home
+  Login["/admin/login"] --> Painel["/admin<br/>Painel de pedidos (filtros, avançar, cancelar)"]
+  Painel --> Home
+  Erro["Páginas de erro 400 / 404 / 500"] --> Home

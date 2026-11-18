@@ -1,0 +1,16 @@
+flowchart TD
+  A([Cliente]) -->|navega pela| B[Vitrine virtual]
+  B -->|exibe| C[Cupcakes]
+  C -->|pertencem a| D[Categorias<br/>tradicional, diet, salgado, regional]
+  C -->|têm| E[Ingredientes e alergênicos]
+  C -->|são adicionados ao| F[Carrinho]
+  F -->|pode incluir| G[Embalagem presente + mensagem]
+  F -->|gera| H[Pedido]
+  H -->|exige| I[CEP dentro da zona de entrega]
+  I -->|define| J[Frete e prazo]
+  H -->|é pago por| K[PIX ou Cartão]
+  K -->|aprovado leva a| L[Status: Recebido]
+  L -->|lojista avança| M[Em preparo → Saiu → Entregue]
+  M -->|é exibido na| N[Linha do tempo do cliente]
+  O([Lojista]) -->|acompanha no| P[Painel com alerta sonoro]
+  P -->|atualiza| M
