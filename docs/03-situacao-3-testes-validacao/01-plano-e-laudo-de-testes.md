@@ -12,7 +12,7 @@
 | Sistema (ponta a ponta) | Jornada completa no navegador real, celular e desktop, cliente e lojista, sem erro de JavaScript | Playwright (Chromium) | `tests_e2e/test_sistema_navegador.py` | 2 roteiros (≈60 verificações) | ✅ 2/2 |
 | Aceitação | Uso real por 5 pessoas | Formulário de avaliação | `02-formulario-avaliacao.md` | 5 | ⏳ ver seção 6 |
 
-**Total automatizado: 111 testes, 100% aprovados. Cobertura de código do back-end: 93%** (relatório completo em `evidencias/pytest-unitarios-integracao.txt`).
+**Total automatizado (v1.1): 118 testes, 100% aprovados (106 pytest + 10 front-end + 2 de sistema). Cobertura de código do back-end: 93%** (relatório completo em `evidencias/pytest-unitarios-integracao.txt`).
 
 Como reproduzir:
 
@@ -68,6 +68,11 @@ python -m pytest tests_e2e -v            # sistema (gera as capturas em docs/img
 | **DEF-01** | Teste de integração `test_uc04_cartao_aprovado_cria_pedido_recebido` (falhou na 1ª execução) | Pagar com cartão sempre dava "Número deve ter no máximo 10 caracteres." | O campo do número do cartão e o campo "Número" do endereço tinham o **mesmo nome** (`numero`) no formulário; o servidor lia o número do cartão como número da casa | Campo do cartão renomeado para `numero_cartao` em template, controller e validação | O teste de integração do fluxo de cartão passou a cobrir o formulário completo |
 | **DEF-02** | Revisão das capturas do teste de sistema | Telefone do cliente aparecia sem formatação no painel (`69999990000`), difícil de ler para o lojista | O banco guarda só dígitos (correto), mas faltava formatar na View | Filtro `telefone` no Jinja: `(69) 99999-0000` | Regra: formatação sempre na View, dado bruto no Model |
 | **DEF-03** | Revisão de código durante o desenvolvimento | Ao adicionar itens pela vitrine com JavaScript, as mensagens "adicionado ao carrinho" se acumulavam e apareciam todas juntas na página seguinte | A requisição via `fetch` gravava mensagens flash que ninguém exibia | Para requisições via JS, o servidor responde JSON (`total_itens`) sem mensagem flash; o contador usa o total real do servidor | Teste `test_us04_adicionar_via_javascript_retorna_json` |
+
+| **DEF-04** | Instalação real no Windows do autor | O servidor não iniciava: `ZoneInfoNotFoundError: America/Porto_Velho` | O Windows não traz a base de fusos horários (no Linux, onde rodam os testes automatizados, ela existe) | Pacote `tzdata` nas dependências + reserva UTC−4 | Lição registrada: testar a instalação no sistema operacional do usuário, não só no ambiente de CI |
+| **DEF-05** | Avaliador Luiz Cláudio | CEP 76800-000 (geral de Porto Velho) era recusado | Faixa da zona Centro começava em 76800-001 | Migração 002 corrige a faixa; mensagem informa os CEPs atendidos | `test_v11_cep_geral_de_porto_velho_e_aceito` |
+| **DEF-06** | Avaliadora Nataska Wanssa | Busca anterior continuava aplicada ao trocar de categoria | Links das categorias repassavam o termo de busca | Categorias limpam a busca; link "Limpar busca" | `test_v11_trocar_categoria_limpa_a_busca` |
+| **DEF-07** | Avaliador Leonardo Gobbi (usabilidade/estética) | Imagens pouco atrativas | Ilustrações planas e repetidas | Ilustrações com volume e enfeite por sabor; fotos reais no Roadmap | captura da vitrine v1.1 |
 
 **Situação atual:** nenhum defeito conhecido em aberto nos testes automatizados. Os defeitos relatados pelos avaliadores entram na seção 6.
 

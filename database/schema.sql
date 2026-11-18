@@ -27,7 +27,8 @@ CREATE TABLE categoria (
 );
 
 -- ---------------------------------------------------------------------
--- CUPCAKE: produto exibido na vitrine (US01, US03)
+-- CUPCAKE: produto do cardápio exibido na vitrine (US01, US03).
+-- Desde a v1.1 também representa bebidas (ilustracao = 'lata' ou 'garrafa').
 -- ---------------------------------------------------------------------
 CREATE TABLE cupcake (
     id              INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -38,6 +39,9 @@ CREATE TABLE cupcake (
     alergenicos     TEXT    NOT NULL DEFAULT '',
     preco_centavos  INTEGER NOT NULL CHECK (preco_centavos BETWEEN 100 AND 100000),
     cor_cobertura   TEXT    NOT NULL DEFAULT '#f4a6c0' CHECK (cor_cobertura GLOB '#[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]'),
+    ilustracao      TEXT    NOT NULL DEFAULT 'cupcake' CHECK (ilustracao IN ('cupcake', 'lata', 'garrafa')),
+    enfeite         TEXT    NOT NULL DEFAULT 'cereja'
+                    CHECK (enfeite IN ('cereja','morango','chocolate','limao','ervas','acai','cupuacu','coco','nenhum')),
     ativo           INTEGER NOT NULL DEFAULT 1 CHECK (ativo IN (0, 1))
 );
 CREATE INDEX ix_cupcake_categoria ON cupcake(categoria_id);

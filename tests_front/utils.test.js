@@ -63,3 +63,12 @@ test('formatação de moeda igual ao back-end', () => {
   assert.equal(U.formatarBRL(123456), 'R$ 1.234,56');
   assert.equal(U.formatarBRL(-990), '-R$ 9,90');
 });
+
+test('busca ao vivo ignora acentos e maiúsculas (avaliação Nataska)', () => {
+  assert.equal(U.normalizarTexto('  Açaí  com CASTANHA '), 'acai com castanha');
+  assert.equal(U.correspondeBusca('Açaí com Castanha Regionais', 'acai'), true);
+  assert.equal(U.correspondeBusca('Cupuaçu Regionais', 'CUPUACU'), true);
+  assert.equal(U.correspondeBusca('Coca-Cola lata 350 ml Bebidas', 'coca lata'), true);
+  assert.equal(U.correspondeBusca('Red Velvet', 'coca'), false);
+  assert.equal(U.correspondeBusca('Qualquer coisa', '   '), true);
+});

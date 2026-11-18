@@ -6,7 +6,8 @@ from dataclasses import dataclass
 
 from . import ValidacaoErro, RegraNegocioErro
 
-MSG_FORA_DA_AREA = "Desculpe, ainda não entregamos nesta região."
+MSG_FORA_DA_AREA = ("Desculpe, ainda não entregamos nesta região. "
+                    "Atendemos Porto Velho/RO: CEPs de 76800-000 a 76834-999.")
 
 
 @dataclass(frozen=True)

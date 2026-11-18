@@ -17,7 +17,7 @@ DESCRICOES = {
         "nome": "Nome exibido no filtro (ex.: Tradicionais).",
         "slug": "Identificador usado na URL (?categoria=diet); só letras minúsculas.",
     }),
-    "cupcake": ("Produto vendido na vitrine (US01, US03).", {
+    "cupcake": ("Produto do cardápio exibido na vitrine (US01, US03). Desde a v1.1 inclui bebidas.", {
         "id": "Identificador do cupcake.",
         "categoria_id": "Categoria à qual o cupcake pertence.",
         "nome": "Nome comercial do sabor.",
@@ -27,6 +27,8 @@ DESCRICOES = {
         "preco_centavos": "Preço unitário em centavos (R$ 12,50 = 1250).",
         "cor_cobertura": "Cor hexadecimal usada na ilustração do produto.",
         "ativo": "1 = aparece na vitrine; 0 = fora do cardápio (exclusão lógica).",
+        "ilustracao": "Tipo de desenho do produto: cupcake, lata ou garrafa (v1.1, bebidas).",
+        "enfeite": "Enfeite desenhado no topo do cupcake (cereja, açaí, cupuaçu, coco…), para cada sabor ter imagem própria (v1.1).",
     }),
     "zona_entrega": ("Faixa de CEPs atendida, com valor e prazo do frete (US08).", {
         "id": "Identificador da zona.",

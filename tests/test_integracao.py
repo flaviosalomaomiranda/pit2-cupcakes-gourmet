@@ -18,7 +18,7 @@ def _codigo_da_url(resp) -> str:
 # ------------------------------------------------------------- vitrine
 def test_us01_vitrine_lista_todos_os_cupcakes_com_preco(client):
     html = client.get("/").get_data(as_text=True)
-    assert html.count('class="card"') == 11
+    assert html.count('class="card"') == 15          # 11 cupcakes + 4 bebidas (v1.1)
     assert "Red Velvet" in html and "R$ 12,50" in html
 
 
@@ -33,11 +33,11 @@ def test_us02_busca_por_ingrediente(client):
 
 
 def test_us02_busca_sem_resultado_mostra_mensagem(client):
-    assert "Nenhum cupcake encontrado" in client.get("/?q=pizza").get_data(as_text=True)
+    assert "Nenhum produto encontrado" in client.get("/?q=pizza").get_data(as_text=True)
 
 
 def test_us02_categoria_invalida_vira_todos(client):
-    assert client.get("/?categoria=<script>").get_data(as_text=True).count('class="card"') == 11
+    assert client.get("/?categoria=<script>").get_data(as_text=True).count('class="card"') == 15
 
 
 def test_us03_detalhe_mostra_ingredientes_e_alergenicos(client):
@@ -326,3 +326,72 @@ def test_banco_rejeita_status_invalido_e_fk(app):
         with pytest.raises(sqlite3.IntegrityError):
             db.execute("INSERT INTO cupcake (categoria_id, nome, descricao, ingredientes, preco_centavos) "
                        "VALUES (1, 'Preço zero', 'd', 'i', 0)")
+
+
+# ------------------------------------------------------------- v1.1: melhorias da avaliação por pares
+def test_v11_categoria_bebidas_com_agua_e_coca(client):
+    """Nataska: 'tem que ter água e coca normal'."""
+    html = client.get("/?categoria=bebidas").get_data(as_text=True)
+    assert html.count('class="card"') == 4
+    assert "Água mineral sem gás" in html and "Coca-Cola lata 350 ml" in html
+
+
+def test_v11_bebida_vai_ao_carrinho_e_ao_pedido(client, csrf, app):
+    cid = None
+    with app.app_context():
+        from app.db import get_db
+        cid = get_db().execute("SELECT id FROM cupcake WHERE nome = 'Coca-Cola lata 350 ml'").fetchone()[0]
+    encher_carrinho_e_frete(client, csrf, itens=((1, 1), (cid, 2)))
+    assert "R$ 31,50" in client.get("/carrinho/").get_data(as_text=True)  # 12,50 + 2×7,00 + 5,00
+
+
+def test_v11_imagens_diferentes_por_sabor_e_bebida(client):
+    """Nataska: regionais com imagens iguais. Cada enfeite gera um desenho diferente."""
+    svgs = {i: client.get(f"/img/cupcake/{i}.svg").get_data(as_text=True) for i in range(1, 16)}
+    assert len(set(svgs.values())) == 15                       # nenhum desenho repetido
+    assert "#3c1053" in svgs[10]                               # açaí com bolinhas roxas
+    assert "#f4e3b5" in svgs[9]                                # cupuaçu aberto
+
+
+def test_v11_trocar_categoria_limpa_a_busca(client):
+    """Nataska: ao clicar em Regionais, a busca anterior continuava aplicada."""
+    html = client.get("/?q=chocolate").get_data(as_text=True)
+    assert 'href="/?categoria=regionais"' in html and "Limpar busca" in html
+
+
+def test_v11_cep_geral_de_porto_velho_e_aceito(client):
+    """Luiz Cláudio: CEP 76800-000 (geral de Porto Velho) era recusado."""
+    assert client.get("/carrinho/api/frete?cep=76800-000").get_json()["ok"] is True
+    msg = client.get("/carrinho/api/frete?cep=69900-000").get_json()["mensagem"]
+    assert "76800-000 a 76834-999" in msg
+
+
+def test_v11_migracao_preserva_pedidos_de_banco_antigo(tmp_path):
+    """Banco criado na v1.0 (com pedidos dos testadores) é atualizado sem perder dados."""
+    import sqlite3
+    from pathlib import Path
+    from app import create_app
+    from app.config import TestConfig
+    raiz = Path(__file__).resolve().parent.parent / "database"
+    caminho = tmp_path / "v10.db"
+    con = sqlite3.connect(caminho)
+    schema_v10 = (raiz / "schema.sql").read_text(encoding="utf-8")
+    schema_v10 = schema_v10.split("    ilustracao")[0] + "    ativo" + schema_v10.split("    ativo", 1)[1]
+    con.executescript(schema_v10)
+    con.executescript((raiz / "seed.sql").read_text(encoding="utf-8"))
+    con.execute("INSERT INTO cliente (nome, telefone, email) VALUES ('Teste', '69999999999', 't@t.com')")
+    con.execute("""INSERT INTO pedido (codigo, cliente_id, zona_entrega_id, cep, logradouro, numero, bairro,
+                   subtotal_centavos, frete_centavos, total_centavos) VALUES ('ANTIGO01',1,1,76801000,'Rua X','1','Centro',1000,500,1500)""")
+    con.commit()
+    assert "ilustracao" not in {r[1] for r in con.execute("PRAGMA table_info(cupcake)")}
+    con.close()
+    app = create_app(TestConfig, DATABASE=str(caminho))
+    with app.app_context():
+        from app.db import get_db
+        db = get_db()
+        assert db.execute("SELECT COUNT(*) FROM pedido WHERE codigo='ANTIGO01'").fetchone()[0] == 1
+        assert db.execute("SELECT COUNT(*) FROM cupcake").fetchone()[0] == 15
+        assert db.execute("PRAGMA user_version").fetchone()[0] == 2
+    create_app(TestConfig, DATABASE=str(caminho))  # segunda vez: nada a migrar, nada duplica
+    con = sqlite3.connect(caminho)
+    assert con.execute("SELECT COUNT(*) FROM cupcake").fetchone()[0] == 15

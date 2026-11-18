@@ -11,7 +11,7 @@ from app.services.pagamento import (autorizar_cartao_simulado, crc16_ccitt, gera
 from app.services.status import validar_transicao
 from app.services.validacao import validar_cliente, validar_endereco, validar_mensagem_presente
 
-ZONAS = [Zona(1, "Centro", 76800001, 76803999, 500, 25), Zona(2, "Zona Sul", 76804000, 76820999, 800, 35)]
+ZONAS = [Zona(1, "Centro", 76800000, 76803999, 500, 25), Zona(2, "Zona Sul", 76804000, 76820999, 800, 35)]
 
 
 # ---------------- dinheiro ----------------

@@ -66,8 +66,18 @@ def test_fluxo_cliente_celular_pix_e_lojista(servidor, navegador):
 
     # 1. Vitrine
     page.goto(servidor + "/")
-    assert page.locator(".card").count() == 11
+    assert page.locator(".card").count() == 15
     _foto(page, "01-vitrine-celular", pagina_inteira=False)
+
+    # 1b. Busca ao vivo (v1.1): filtra enquanto digita, sem acento, sem clicar em Buscar
+    page.type("#q", "acai")
+    expect(page.locator(".card:visible")).to_have_count(1)
+    page.fill("#q", "coca")
+    expect(page.locator(".card:visible")).to_have_count(2)
+    _foto(page, "16-busca-ao-vivo-bebidas", pagina_inteira=False)
+    page.fill("#q", "")
+    page.dispatch_event("#q", "input")
+    expect(page.locator(".card:visible")).to_have_count(15)
 
     # 2. Filtro regional + adicionar via JavaScript (sem recarregar)
     page.click(".filtros a:has-text(\"Regionais\")")

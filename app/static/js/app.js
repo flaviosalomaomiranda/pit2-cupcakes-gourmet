@@ -50,6 +50,33 @@
     });
   });
 
+  // Busca ao vivo na vitrine: filtra os cards enquanto digita (sem precisar clicar em "Buscar")
+  var campoBusca = $('[data-busca-ao-vivo]');
+  if (campoBusca) {
+    var cards = $$('.card[data-texto]');
+    var semResultado = $('[data-sem-resultado]');
+    var termoSaida = $('[data-termo]');
+    var espera = null;
+    var filtrar = function () {
+      var termo = campoBusca.value;
+      var visiveis = 0;
+      cards.forEach(function (c) {
+        var ok = U.correspondeBusca(c.getAttribute('data-texto'), termo);
+        c.hidden = !ok;
+        if (ok) visiveis++;
+      });
+      semResultado.hidden = visiveis > 0;
+      termoSaida.textContent = termo.trim() ? ' para “' + termo.trim() + '”' : '';
+      try {
+        var url = new URL(window.location.href);
+        if (termo.trim()) url.searchParams.set('q', termo.trim()); else url.searchParams.delete('q');
+        history.replaceState(null, '', url);
+      } catch (e) { /* navegador antigo: só não atualiza o endereço */ }
+    };
+    campoBusca.addEventListener('input', function () { clearTimeout(espera); espera = setTimeout(filtrar, 120); });
+    campoBusca.addEventListener('search', filtrar);   // botão "x" do campo de busca
+  }
+
   // Prévia do frete enquanto digita o CEP
   var formFrete = $('[data-frete]');
   if (formFrete) {

@@ -76,7 +76,22 @@
     return (negativo ? '-' : '') + 'R$ ' + reais + ',' + cents;
   }
 
+  /** minúsculas e sem acento: 'Açaí' -> 'acai' */
+  function normalizarTexto(texto) {
+    return String(texto == null ? '' : texto).toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim();
+  }
+
+  /** busca ao vivo: todas as palavras digitadas precisam aparecer no texto (sem acento, sem maiúsculas) */
+  function correspondeBusca(texto, termo) {
+    var alvo = normalizarTexto(texto);
+    var palavras = normalizarTexto(termo).split(' ').filter(Boolean);
+    for (var i = 0; i < palavras.length; i++) if (alvo.indexOf(palavras[i]) === -1) return false;
+    return true;
+  }
+
   var api = {
+    normalizarTexto: normalizarTexto, correspondeBusca: correspondeBusca,
     soDigitos: soDigitos, mascaraCep: mascaraCep, cepValido: cepValido,
     mascaraTelefone: mascaraTelefone, mascaraCartao: mascaraCartao, mascaraValidade: mascaraValidade,
     luhnValido: luhnValido, limitarQuantidade: limitarQuantidade, formatarContagem: formatarContagem,

@@ -11,7 +11,7 @@ def listar_categorias() -> list[dict]:
 
 def listar_cupcakes(categoria_slug: str | None = None, busca: str | None = None) -> list[dict]:
     sql = (
-        "SELECT c.id, c.nome, c.descricao, c.preco_centavos, c.cor_cobertura, "
+        "SELECT c.id, c.nome, c.descricao, c.ingredientes, c.preco_centavos, c.cor_cobertura, "
         "       cat.nome AS categoria, cat.slug AS categoria_slug "
         "FROM cupcake c JOIN categoria cat ON cat.id = c.categoria_id "
         "WHERE c.ativo = 1"

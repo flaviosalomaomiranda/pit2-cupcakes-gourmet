@@ -22,11 +22,12 @@ def index():
 
 @bp.get("/img/cupcake/<int:cupcake_id>.svg")
 def imagem(cupcake_id: int):
-    """Ilustração vetorial leve (≈1 KB) gerada com a cor da cobertura do sabor."""
+    """Ilustração vetorial leve (≈1 KB): cupcake com enfeite próprio do sabor, lata ou garrafa."""
     cupcake = cupcake_model.buscar_cupcake(cupcake_id)
     if cupcake is None:
         abort(404)
-    svg = render_template("vitrine/cupcake.svg", cor=cupcake["cor_cobertura"], salgado=cupcake["categoria_slug"] == "salgados")
+    svg = render_template("vitrine/cupcake.svg", cor=cupcake["cor_cobertura"],
+                          ilustracao=cupcake["ilustracao"], enfeite=cupcake["enfeite"])
     resp = make_response(svg)
     resp.headers["Content-Type"] = "image/svg+xml; charset=utf-8"
     resp.headers["Cache-Control"] = "public, max-age=86400"

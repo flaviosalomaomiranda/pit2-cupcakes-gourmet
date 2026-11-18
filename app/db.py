@@ -33,11 +33,44 @@ def init_db():
     db = get_db()
     db.executescript((SQL_DIR / "schema.sql").read_text(encoding="utf-8"))
     db.executescript((SQL_DIR / "seed.sql").read_text(encoding="utf-8"))
+    aplicar_migracoes(db)
     db.execute(
         "INSERT INTO usuario_admin (usuario, senha_hash) VALUES (?, ?)",
         (current_app.config["ADMIN_USUARIO"], generate_password_hash(current_app.config["ADMIN_SENHA"])),
     )
     db.commit()
+
+
+def _colunas(db, tabela: str) -> set[str]:
+    return {r[1] for r in db.execute(f"PRAGMA table_info({tabela})").fetchall()}
+
+
+def aplicar_migracoes(db=None) -> list[str]:
+    """Aplica, em ordem, os scripts de database/migracoes ainda não aplicados.
+
+    A versão do banco fica em PRAGMA user_version. Assim, um banco que já tem pedidos
+    (por exemplo, durante os testes com usuários) é atualizado sem perder dados.
+    """
+    db = db or get_db()
+    aplicadas = []
+    versao = db.execute("PRAGMA user_version").fetchone()[0]
+    for arq in sorted((SQL_DIR / "migracoes").glob("*.sql")):
+        numero = int(arq.name.split("_")[0])
+        if numero <= versao:
+            continue
+        if numero == 1:  # colunas novas em bancos criados antes da v1.1
+            cols = _colunas(db, "cupcake")
+            if "ilustracao" not in cols:
+                db.execute("ALTER TABLE cupcake ADD COLUMN ilustracao TEXT NOT NULL DEFAULT 'cupcake' "
+                           "CHECK (ilustracao IN ('cupcake', 'lata', 'garrafa'))")
+            if "enfeite" not in cols:
+                db.execute("ALTER TABLE cupcake ADD COLUMN enfeite TEXT NOT NULL DEFAULT 'cereja' CHECK (enfeite IN "
+                           "('cereja','morango','chocolate','limao','ervas','acai','cupuacu','coco','nenhum'))")
+        db.executescript(arq.read_text(encoding="utf-8"))
+        db.execute(f"PRAGMA user_version = {numero}")
+        db.commit()
+        aplicadas.append(arq.name)
+    return aplicadas
 
 
 def banco_existe() -> bool:

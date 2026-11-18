@@ -39,6 +39,9 @@ def create_app(config_obj=Config, **overrides) -> Flask:
         if not db.banco_existe():
             db.init_db()
             app.logger.info("Banco criado automaticamente em %s", app.config["DATABASE"])
+        else:
+            for m in db.aplicar_migracoes():
+                app.logger.info("Migração aplicada: %s", m)
 
     from .controllers import admin, carrinho, checkout, pedidos, vitrine
     for bp in (vitrine.bp, carrinho.bp, checkout.bp, pedidos.bp, admin.bp):

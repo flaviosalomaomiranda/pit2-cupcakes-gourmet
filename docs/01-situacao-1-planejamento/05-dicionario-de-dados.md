@@ -15,7 +15,7 @@ Agrupamento de cupcakes usado nos filtros da vitrine (US02).
 
 ## cupcake
 
-Produto vendido na vitrine (US01, US03).
+Produto do cardápio exibido na vitrine (US01, US03). Desde a v1.1 inclui bebidas.
 
 | Coluna | Tipo | Nulo? | Restrições | Descrição |
 |---|---|---|---|---|
@@ -27,7 +27,11 @@ Produto vendido na vitrine (US01, US03).
 | `alergenicos` | TEXT | Não | DEFAULT '' | Alergênicos declarados (glúten, ovos, lactose…). |
 | `preco_centavos` | INTEGER | Não | CHECK | Preço unitário em centavos (R$ 12,50 = 1250). |
 | `cor_cobertura` | TEXT | Não | CHECK, DEFAULT '#f4a6c0' | Cor hexadecimal usada na ilustração do produto. |
+| `ilustracao` | TEXT | Não | CHECK, DEFAULT 'cupcake' | Tipo de desenho do produto: cupcake, lata ou garrafa (v1.1, bebidas). |
+| `enfeite` | TEXT | Não | DEFAULT 'cereja' | Enfeite desenhado no topo do cupcake (cereja, açaí, cupuaçu, coco…), para cada sabor ter imagem própria (v1.1). |
 | `ativo` | INTEGER | Não | CHECK, DEFAULT 1 | 1 = aparece na vitrine; 0 = fora do cardápio (exclusão lógica). |
+
+Restrições de tabela: `CHECK (enfeite IN ('cereja','morango','chocolate','limao','ervas','acai','cupuacu','coco','nenhum'))`
 
 Índices: `ix_cupcake_categoria`
 
