@@ -113,7 +113,7 @@ tests/test_unit_servicos.py::test_transicoes_invalidas[ENTREGUE-EM_PREPARO] PASS
 tests/test_unit_servicos.py::test_transicoes_invalidas[RECEBIDO-ENTREGUE] PASSED [ 97%]
 tests/test_unit_servicos.py::test_transicoes_invalidas[CANCELADO-RECEBIDO] PASSED [ 98%]
 tests/test_unit_servicos.py::test_transicoes_invalidas[SAIU_PARA_ENTREGA-CANCELADO] PASSED [ 99%]
-tests/test_unit_servicos.py::test_transicoes_invalidas[RECEBIDO-INEXISTENTE] PASSED [100%]/usr/local/lib/python3.13/ast.py:50: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fbb13fec040>
+tests/test_unit_servicos.py::test_transicoes_invalidas[RECEBIDO-INEXISTENTE] PASSED [100%]/usr/local/lib/python3.13/ast.py:50: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f8f411c4040>
   return compile(source, filename, mode, flags,
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
 
@@ -145,4 +145,4 @@ app/services/status.py           11      0   100%
 app/services/validacao.py        29      1    97%
 -------------------------------------------------
 TOTAL                           873     58    93%
-============================= 109 passed in 6.19s ==============================
+============================= 109 passed in 5.89s ==============================

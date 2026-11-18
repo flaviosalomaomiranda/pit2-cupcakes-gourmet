@@ -8,4 +8,4 @@ collecting ... collected 2 items
 tests_e2e/test_sistema_navegador.py::test_fluxo_cliente_celular_pix_e_lojista PASSED [ 50%]
 tests_e2e/test_sistema_navegador.py::test_cartao_recusado_e_carrinho_vazio PASSED [100%]
 
-============================== 2 passed in 5.21s ===============================
+============================== 2 passed in 5.20s ===============================

@@ -75,6 +75,7 @@ python -m pytest tests_e2e -v            # sistema (gera as capturas em docs/img
 | **DEF-07** | Avaliador Leonardo Gobbi (usabilidade/estética) | Imagens pouco atrativas | Ilustrações planas e repetidas | Ilustrações com volume e enfeite por sabor; fotos reais no Roadmap | captura da vitrine v1.1 |
 | **DEF-08** | Avaliador Fernando Miranda | Não conseguia pagar com cartão | Máscara da validade limitada a 4 dígitos: 12/2030 virava 12/20 (vencido); a mensagem de erro ficava só no topo da página | Máscara MM/AA ou MM/AAAA; mensagem de erro ao lado do campo, com `role=alert` | testes de front e de integração específicos |
 | **DEF-09** | Avaliador Fernando Miranda (usabilidade) | E-mail obrigatório sem necessidade | Requisito excessivo no PIT I | E-mail opcional (migração 003 recria a tabela preservando dados) | `test_v11_email_e_opcional` |
+| **DEF-10** | Prints da avaliadora Valdirene Aquino Demetrio | No celular, o topo ocupava 3 linhas e o texto da página aparecia por trás dele | Fundo do topo 96% opaco e textos quebrando em telas estreitas | Topo opaco, textos sem quebra e tamanhos menores abaixo de 420 px | captura do teste de sistema no celular |
 
 **Situação atual:** nenhum defeito conhecido em aberto nos testes automatizados. Os defeitos relatados pelos avaliadores entram na seção 6.
 
