@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block titulo %}Pedido {{ pedido.codigo }} — Doce Nuvem{% endblock %}
+{% block conteudo %}
+<h1>Pedido {{ pedido.codigo }}</h1>
+<p class="muted">Feito em {{ pedido.criado_em|data_local }} · Guarde este código para acompanhar.</p>
+
+{% if pedido.status == 'CANCELADO' %}
+  <p class="aviso aviso--erro">Pedido cancelado{% if pedido.pg_status == 'EXPIRADO' %}: o PIX não foi pago dentro de 15 minutos{% endif %}.
+    <a href="{{ url_for('vitrine.index') }}">Fazer novo pedido</a></p>
+{% else %}
+<ol class="linha-tempo" aria-label="Andamento do pedido">
+  {% for passo in fluxo %}
+    {% set feito = passo in passos_feitos %}
+    <li class="linha-tempo__passo{% if feito %} feito{% endif %}{% if pedido.status == passo %} atual{% endif %}"{% if pedido.status == passo %} aria-current="step"{% endif %}>
+      <span class="linha-tempo__ponto" aria-hidden="true"></span>
+      <strong>{{ passo|status }}</strong>
+      <small>{% if feito %}{{ passos_feitos[passo]|data_local('%H:%M') }}{% else %}—{% endif %}</small>
+    </li>
+  {% endfor %}
+</ol>
+{% if pedido.status != 'ENTREGUE' %}<p class="muted" data-auto-recarregar="30">Esta página se atualiza sozinha a cada 30 segundos.</p>{% endif %}
+{% endif %}
+
+<div class="duas-colunas">
+  <section class="caixa">
+    <h2>Itens</h2>
+    <ul class="resumo__itens">
+      {% for i in pedido.itens %}<li><span>{{ i.quantidade }}× {{ i.nome }}</span><span>{{ i.subtotal_centavos|brl }}</span></li>{% endfor %}
+    </ul>
+    <dl class="totais">
+      <div><dt>Subtotal</dt><dd>{{ pedido.subtotal_centavos|brl }}</dd></div>
+      {% if pedido.embalagem_presente %}<div><dt>Embalagem presente</dt><dd>{{ pedido.embalagem_centavos|brl }}</dd></div>{% endif %}
+      <div><dt>Frete</dt><dd>{{ pedido.frete_centavos|brl }}</dd></div>
+      <div class="totais__total"><dt>Total</dt><dd>{{ pedido.total_centavos|brl }}</dd></div>
+    </dl>
+  </section>
+  <section class="caixa">
+    <h2>Entrega</h2>
+    <p>{{ pedido.cliente_nome }}<br>{{ pedido.logradouro }}, {{ pedido.numero }}{% if pedido.complemento %} — {{ pedido.complemento }}{% endif %}<br>
+       {{ pedido.bairro }} · CEP {{ pedido.cep|cep }}</p>
+    <p class="muted">Prazo estimado: até {{ pedido.prazo_minutos }} min após sair para entrega.</p>
+    <h2>Pagamento</h2>
+    <p>{% if pedido.pg_metodo == 'PIX' %}PIX{% else %}Cartão final {{ pedido.cartao_final }}{% endif %} ·
+       {{ {'APROVADO':'Aprovado','PENDENTE':'Pendente','RECUSADO':'Recusado','EXPIRADO':'Expirado'}[pedido.pg_status] }}</p>
+    {% if pedido.embalagem_presente %}<p>🎁 Embalagem presente{% if pedido.mensagem_presente %}: “{{ pedido.mensagem_presente }}”{% endif %}</p>{% endif %}
+  </section>
+</div>
+{% endblock %}

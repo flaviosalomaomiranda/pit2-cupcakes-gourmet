@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<section class="hero">
+  <h1>Cupcakes feitos hoje,<br>entregues em minutos.</h1>
+  <p>Sabores tradicionais, diet, salgados e regionais da Amazônia. Escolha, pague com PIX ou cartão e acompanhe a entrega.</p>
+</section>
+
+<form class="busca" method="get" action="{{ url_for('vitrine.index') }}" role="search">
+  {% if categoria_ativa %}<input type="hidden" name="categoria" value="{{ categoria_ativa }}">{% endif %}
+  <label class="sr-only" for="q">Buscar sabores</label>
+  <input id="q" name="q" type="search" placeholder="Buscar sabores ou ingredientes…" value="{{ busca }}" maxlength="40">
+  <button class="btn btn--sec" type="submit">Buscar</button>
+</form>
+
+<nav class="filtros" aria-label="Categorias">
+  <a class="pill{% if not categoria_ativa %} pill--ativa{% endif %}" href="{{ url_for('vitrine.index', q=busca or None) }}"{% if not categoria_ativa %} aria-current="page"{% endif %}>Todos</a>
+  {% for c in categorias %}
+    <a class="pill{% if categoria_ativa == c.slug %} pill--ativa{% endif %}" href="{{ url_for('vitrine.index', categoria=c.slug, q=busca or None) }}"{% if categoria_ativa == c.slug %} aria-current="page"{% endif %}>{{ c.nome }}</a>
+  {% endfor %}
+</nav>
+
+{% if cupcakes %}
+<ul class="grade" aria-label="Cupcakes disponíveis">
+  {% for c in cupcakes %}
+  <li class="card">
+    <a class="card__foto" href="{{ url_for('vitrine.detalhe', cupcake_id=c.id) }}">
+      <img src="{{ url_for('vitrine.imagem', cupcake_id=c.id) }}" alt="Cupcake {{ c.nome }}" width="200" height="200" loading="lazy">
+    </a>
+    <div class="card__corpo">
+      <span class="tag">{{ c.categoria }}</span>
+      <h2 class="card__nome"><a href="{{ url_for('vitrine.detalhe', cupcake_id=c.id) }}">{{ c.nome }}</a></h2>
+      <p class="card__preco">{{ c.preco_centavos|brl }}</p>
+      <form method="post" action="{{ url_for('carrinho.adicionar', cupcake_id=c.id) }}" data-add-carrinho>
+        <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+        <input type="hidden" name="quantidade" value="1">
+        <button class="btn btn--pri btn--bloco" type="submit">+ Adicionar</button>
+      </form>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<div class="vazio">
+  <p>Nenhum cupcake encontrado{% if busca %} para “{{ busca }}”{% endif %}.</p>
+  <a class="btn btn--sec" href="{{ url_for('vitrine.index') }}">Ver todos os sabores</a>
+</div>
+{% endif %}
+{% endblock %}

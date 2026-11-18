@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block titulo %}Painel de pedidos — Doce Nuvem{% endblock %}
+{% block body_class %}admin{% endblock %}
+{% block conteudo %}
+<div class="painel__topo">
+  <h1>Pedidos</h1>
+  <div class="painel__acoes">
+    <button class="btn btn--sec" type="button" data-ativar-som aria-pressed="false">🔔 Ativar alerta sonoro</button>
+    <form method="post" action="{{ url_for('admin.logout') }}">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <button class="btn btn--sec" type="submit">Sair ({{ session.admin_usuario }})</button>
+    </form>
+  </div>
+</div>
+<p class="aviso aviso--novo" data-novo-pedido hidden>Novo pedido pago! <a href="{{ url_for('admin.painel') }}">Atualizar lista</a></p>
+
+<nav class="filtros" aria-label="Filtrar por status" data-total-pagos="{{ total_pagos }}" data-url-resumo="{{ url_for('admin.api_resumo') }}">
+  <a class="pill{% if not filtro %} pill--ativa{% endif %}" href="{{ url_for('admin.painel') }}">Em andamento</a>
+  {% for s in ['RECEBIDO','EM_PREPARO','SAIU_PARA_ENTREGA','ENTREGUE','AGUARDANDO_PAGAMENTO','CANCELADO'] %}
+    <a class="pill{% if filtro == s %} pill--ativa{% endif %}" href="{{ url_for('admin.painel', status=s) }}">{{ rotulos[s] }} <span class="pill__n">{{ contagem.get(s, 0) }}</span></a>
+  {% endfor %}
+</nav>
+
+{% if pedidos %}
+<ul class="pedidos">
+  {% for p in pedidos %}
+  <li class="pedido pedido--{{ p.status|lower }}">
+    <header class="pedido__cab">
+      <strong>#{{ p.codigo }}</strong>
+      <span class="status status--{{ p.status|lower }}">{{ p.status|status }}</span>
+      <span class="muted">{{ p.criado_em|data_local('%d/%m %H:%M') }}</span>
+    </header>
+    <p><strong>{{ p.cliente_nome }}</strong> · {{ p.cliente_telefone|telefone }}</p>
+    <p>{{ p.logradouro }}, {{ p.numero }}{% if p.complemento %} — {{ p.complemento }}{% endif %} · {{ p.bairro }} · {{ p.cep|cep }}</p>
+    <ul class="pedido__itens">{% for i in p.itens %}<li>{{ i.quantidade }}× {{ i.nome }}</li>{% endfor %}</ul>
+    {% if p.embalagem_presente %}<p class="destaque-presente">🎁 PRESENTE{% if p.mensagem_presente %} — cartão: “{{ p.mensagem_presente }}”{% endif %}</p>{% endif %}
+    <footer class="pedido__rodape">
+      <span>{{ p.total_centavos|brl }} · {{ 'PIX' if p.pg_metodo == 'PIX' else 'Cartão' }}</span>
+      <div class="pedido__botoes">
+        {% if proximo.get(p.status) %}
+        <form method="post" action="{{ url_for('admin.avancar', codigo=p.codigo, status=filtro) }}">
+          <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+          <input type="hidden" name="status_atual" value="{{ p.status }}">
+          <button class="btn btn--pri" type="submit">Marcar “{{ rotulos[proximo[p.status]] }}”</button>
+        </form>
+        {% endif %}
+        {% if p.status in ('RECEBIDO', 'EM_PREPARO', 'AGUARDANDO_PAGAMENTO') %}
+        <form method="post" action="{{ url_for('admin.cancelar', codigo=p.codigo) }}" data-confirmar="Cancelar o pedido {{ p.codigo }}?">
+          <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+          <button class="link-perigo" type="submit">Cancelar</button>
+        </form>
+        {% endif %}
+      </div>
+    </footer>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<div class="vazio"><p>Nenhum pedido nesta lista.</p></div>
+{% endif %}
+{% endblock %}

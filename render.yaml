@@ -1,0 +1,15 @@
+# Deploy gratuito no Render (https://render.com): New > Blueprint > escolha este repositório.
+services:
+  - type: web
+    name: doce-nuvem-cupcakes
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt gunicorn==23.0.0
+    startCommand: gunicorn "run:app" --workers 1 --threads 4 --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ADMIN_SENHA
+        value: cupcake123

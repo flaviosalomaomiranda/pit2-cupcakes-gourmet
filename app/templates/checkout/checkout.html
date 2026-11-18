@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block titulo %}Finalizar pedido — Doce Nuvem{% endblock %}
+{% macro invalido(campo) %}{% if erro_campo == campo %} aria-invalid="true" autofocus{% endif %}{% endmacro %}
+{% block conteudo %}
+<h1>Finalizar pedido</h1>
+<form class="duas-colunas" method="post" action="{{ url_for('checkout.finalizar') }}" novalidate data-checkout>
+  <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+  <div>
+    <fieldset class="caixa">
+      <legend>Seus dados</legend>
+      <div class="campo"><label for="nome">Nome completo</label>
+        <input id="nome" name="nome" autocomplete="name" maxlength="80" required value="{{ form.nome }}"{{ invalido('nome') }}></div>
+      <div class="grade-2">
+        <div class="campo"><label for="telefone">Celular (WhatsApp)</label>
+          <input id="telefone" name="telefone" inputmode="tel" autocomplete="tel" placeholder="(69) 99999-0000" maxlength="15" required value="{{ form.telefone }}" data-mascara-telefone{{ invalido('telefone') }}></div>
+        <div class="campo"><label for="email">E-mail</label>
+          <input id="email" name="email" type="email" autocomplete="email" maxlength="120" required value="{{ form.email }}"{{ invalido('email') }}></div>
+      </div>
+    </fieldset>
+
+    <fieldset class="caixa">
+      <legend>Entrega — CEP {{ cep|cep }} ({{ zona.nome }})</legend>
+      <div class="campo"><label for="logradouro">Rua/avenida</label>
+        <input id="logradouro" name="logradouro" autocomplete="address-line1" maxlength="120" required value="{{ form.logradouro }}"{{ invalido('logradouro') }}></div>
+      <div class="grade-2">
+        <div class="campo"><label for="numero">Número</label>
+          <input id="numero" name="numero" maxlength="10" required value="{{ form.numero }}"{{ invalido('numero') }}></div>
+        <div class="campo"><label for="bairro">Bairro</label>
+          <input id="bairro" name="bairro" maxlength="60" required value="{{ form.bairro }}"{{ invalido('bairro') }}></div>
+      </div>
+      <div class="campo"><label for="complemento">Complemento (opcional)</label>
+        <input id="complemento" name="complemento" maxlength="60" value="{{ form.complemento }}"></div>
+      <a class="link" href="{{ url_for('carrinho.ver') }}">Trocar CEP</a>
+    </fieldset>
+
+    <fieldset class="caixa{% if erro_campo in ('metodo','pagamento','numero_cartao','validade','cvv','nome_cartao') %} caixa--erro{% endif %}">
+      <legend>Como você quer pagar?</legend>
+      <label class="opcao"><input type="radio" name="metodo" value="PIX" {% if form.metodo != 'CARTAO' %}checked{% endif %} data-metodo>
+        <span><strong>PIX</strong><small>Aprovação na hora · QR Code válido por 15 min</small></span></label>
+      <label class="opcao"><input type="radio" name="metodo" value="CARTAO" {% if form.metodo == 'CARTAO' %}checked{% endif %} data-metodo>
+        <span><strong>Cartão de crédito</strong><small>Os dados do cartão não ficam salvos</small></span></label>
+
+      <div class="cartao" data-cartao {% if form.metodo != 'CARTAO' %}hidden{% endif %}>
+        <div class="campo"><label for="numero_cartao">Número do cartão</label>
+          <input id="numero_cartao" name="numero_cartao" inputmode="numeric" autocomplete="cc-number" maxlength="23" placeholder="0000 0000 0000 0000" data-mascara-cartao{{ invalido('numero_cartao') }}></div>
+        <div class="campo"><label for="nome_cartao">Nome impresso no cartão</label>
+          <input id="nome_cartao" name="nome_cartao" autocomplete="cc-name" maxlength="60"{{ invalido('nome_cartao') }}></div>
+        <div class="grade-2">
+          <div class="campo"><label for="validade">Validade</label>
+            <input id="validade" name="validade" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/AA" maxlength="7" data-mascara-validade{{ invalido('validade') }}></div>
+          <div class="campo"><label for="cvv">CVV</label>
+            <input id="cvv" name="cvv" inputmode="numeric" autocomplete="cc-csc" maxlength="4"{{ invalido('cvv') }}></div>
+        </div>
+        <p class="muted">Ambiente de teste: use <code>4111 1111 1111 1111</code> (aprovado) ou <code>4000 0000 0000 0002</code> (recusado).</p>
+      </div>
+    </fieldset>
+  </div>
+
+  <aside class="resumo" aria-label="Resumo do pedido">
+    <h2>Resumo</h2>
+    <ul class="resumo__itens">
+      {% for l in linhas %}<li><span>{{ l.quantidade }}× {{ l.nome }}</span><span>{{ l.subtotal_centavos|brl }}</span></li>{% endfor %}
+    </ul>
+    <dl class="totais">
+      <div><dt>Subtotal</dt><dd>{{ totais.subtotal|brl }}</dd></div>
+      {% if presente %}<div><dt>Embalagem presente</dt><dd>{{ totais.embalagem|brl }}</dd></div>{% endif %}
+      <div><dt>Frete ({{ zona.prazo_minutos }} min)</dt><dd>{{ totais.frete|brl }}</dd></div>
+      <div class="totais__total"><dt>Total a pagar</dt><dd>{{ totais.total|brl }}</dd></div>
+    </dl>
+    <button class="btn btn--pri btn--bloco btn--grande" type="submit" data-enviar>Confirmar e pagar</button>
+  </aside>
+</form>
+{% endblock %}

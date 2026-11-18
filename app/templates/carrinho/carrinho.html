@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block titulo %}Meu carrinho — Doce Nuvem{% endblock %}
+{% block conteudo %}
+<h1>Meu carrinho</h1>
+{% if not linhas %}
+<div class="vazio">
+  <p>Seu carrinho está vazio.</p>
+  <a class="btn btn--pri" href="{{ url_for('vitrine.index') }}">Ver cupcakes</a>
+</div>
+{% else %}
+<div class="duas-colunas">
+  <section aria-label="Itens do carrinho">
+    <ul class="itens">
+      {% for l in linhas %}
+      <li class="item">
+        <img src="{{ url_for('vitrine.imagem', cupcake_id=l.cupcake_id) }}" alt="" width="64" height="64">
+        <div class="item__info">
+          <strong>{{ l.nome }}</strong>
+          <span class="muted">{{ l.preco_centavos|brl }} cada</span>
+        </div>
+        <div class="item__acoes">
+          <form method="post" action="{{ url_for('carrinho.alterar', cupcake_id=l.cupcake_id) }}" class="qtd qtd--inline">
+            <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+            <button class="qtd__btn" name="acao" value="menos" aria-label="Diminuir {{ l.nome }}">−</button>
+            <span class="qtd__valor" aria-label="Quantidade">{{ l.quantidade }}</span>
+            <button class="qtd__btn" name="acao" value="mais" aria-label="Aumentar {{ l.nome }}">+</button>
+          </form>
+          <strong class="item__subtotal">{{ l.subtotal_centavos|brl }}</strong>
+          <form method="post" action="{{ url_for('carrinho.alterar', cupcake_id=l.cupcake_id) }}">
+            <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+            <button class="link-perigo" name="acao" value="remover">Remover</button>
+          </form>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <form class="caixa" method="post" action="{{ url_for('carrinho.embalagem') }}">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <h2>Embalar para presente?</h2>
+      <label class="check">
+        <input type="checkbox" name="embalagem_presente" value="1" {% if presente %}checked{% endif %} data-toggle-mensagem>
+        Caixa presente com laço e cartão (+ {{ valor_embalagem|brl }})
+      </label>
+      <div class="campo" data-mensagem-presente {% if not presente %}hidden{% endif %}>
+        <label for="mensagem_presente">Mensagem do cartão (opcional)</label>
+        <textarea id="mensagem_presente" name="mensagem_presente" maxlength="140" rows="2" data-contador>{{ mensagem_presente }}</textarea>
+        <small class="muted" data-contador-saida>{{ mensagem_presente|length }}/140</small>
+      </div>
+      <button class="btn btn--sec" type="submit">Salvar opção de embalagem</button>
+    </form>
+  </section>
+
+  <aside class="resumo" aria-label="Resumo do pedido">
+    <form method="post" action="{{ url_for('carrinho.frete') }}" class="frete" data-frete>
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <label for="cep">CEP de entrega</label>
+      <div class="linha">
+        <input id="cep" name="cep" inputmode="numeric" autocomplete="postal-code" placeholder="76801-000" maxlength="9"
+               value="{{ cep|cep if cep else '' }}" data-mascara-cep required>
+        <button class="btn btn--sec" type="submit">Calcular</button>
+      </div>
+      <p class="frete__resultado" data-frete-resultado aria-live="polite">
+        {% if zona %}{{ zona.nome }}: {{ zona.valor_centavos|brl }} · até {{ zona.prazo_minutos }} min{% elif erro_frete %}<span class="erro">{{ erro_frete }}</span>{% endif %}
+      </p>
+    </form>
+    <dl class="totais">
+      <div><dt>Subtotal</dt><dd>{{ totais.subtotal|brl }}</dd></div>
+      {% if presente %}<div><dt>Embalagem presente</dt><dd>{{ totais.embalagem|brl }}</dd></div>{% endif %}
+      <div><dt>Frete</dt><dd>{% if zona %}{{ totais.frete|brl }}{% else %}—{% endif %}</dd></div>
+      <div class="totais__total"><dt>Total</dt><dd>{{ totais.total|brl }}</dd></div>
+    </dl>
+    {% if zona %}
+      <a class="btn btn--pri btn--bloco" href="{{ url_for('checkout.formulario') }}">Ir para pagamento</a>
+    {% else %}
+      <p class="muted">Calcule o frete para continuar.</p>
+    {% endif %}
+    <a class="link" href="{{ url_for('vitrine.index') }}">← Continuar comprando</a>
+  </aside>
+</div>
+{% endif %}
+{% endblock %}

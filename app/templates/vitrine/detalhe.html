@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block titulo %}{{ cupcake.nome }} — Doce Nuvem{% endblock %}
+{% block conteudo %}
+<nav class="trilha" aria-label="Você está em">
+  <a href="{{ url_for('vitrine.index') }}">Vitrine</a> ›
+  <a href="{{ url_for('vitrine.index', categoria=cupcake.categoria_slug) }}">{{ cupcake.categoria }}</a> ›
+  <span aria-current="page">{{ cupcake.nome }}</span>
+</nav>
+<article class="detalhe">
+  <img class="detalhe__foto" src="{{ url_for('vitrine.imagem', cupcake_id=cupcake.id) }}" alt="Cupcake {{ cupcake.nome }}" width="320" height="320">
+  <div class="detalhe__info">
+    <span class="tag">{{ cupcake.categoria }}</span>
+    <h1>{{ cupcake.nome }}</h1>
+    <p class="detalhe__preco">{{ cupcake.preco_centavos|brl }}</p>
+    <p>{{ cupcake.descricao }}</p>
+    <h2>Ingredientes</h2>
+    <p>{{ cupcake.ingredientes }}</p>
+    {% if cupcake.alergenicos %}
+    <p class="alerta-alergia"><strong>Contém:</strong> {{ cupcake.alergenicos }}</p>
+    {% endif %}
+    <form class="detalhe__compra" method="post" action="{{ url_for('carrinho.adicionar', cupcake_id=cupcake.id) }}">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <input type="hidden" name="voltar" value="detalhe">
+      <label for="quantidade">Quantidade</label>
+      <div class="qtd" data-qtd>
+        <button type="button" class="qtd__btn" data-qtd-menos aria-label="Diminuir">−</button>
+        <input id="quantidade" name="quantidade" type="number" inputmode="numeric" min="1" max="50" value="1" required>
+        <button type="button" class="qtd__btn" data-qtd-mais aria-label="Aumentar">+</button>
+      </div>
+      <button class="btn btn--pri" type="submit">Adicionar ao carrinho</button>
+    </form>
+  </div>
+</article>
+{% endblock %}

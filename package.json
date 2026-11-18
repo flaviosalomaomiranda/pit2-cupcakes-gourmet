@@ -1,0 +1,8 @@
+{
+  "name": "pit2-cupcakes-gourmet-front",
+  "private": true,
+  "description": "Testes do front-end (sem dependências: executor nativo do Node.js 18+)",
+  "scripts": {
+    "test": "node --test tests_front/utils.test.js"
+  }
+}

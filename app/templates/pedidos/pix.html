@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block titulo %}Pague com PIX — pedido {{ pedido.codigo }}{% endblock %}
+{% block conteudo %}
+<section class="pix caixa">
+  <h1>Pague com PIX</h1>
+  <p>Pedido <strong>{{ pedido.codigo }}</strong> · Total <strong>{{ pedido.total_centavos|brl }}</strong></p>
+  <img class="pix__qr" src="{{ qr_svg }}" alt="QR Code PIX do pedido {{ pedido.codigo }}" width="230" height="230">
+  <p class="pix__tempo">Expira em <strong data-contagem="{{ expira_ts }}">15:00</strong></p>
+  <label for="copia">PIX Copia e Cola</label>
+  <div class="linha">
+    <input id="copia" readonly value="{{ pedido.codigo_pix }}" data-copiar-origem>
+    <button class="btn btn--sec" type="button" data-copiar>Copiar código</button>
+  </div>
+  <ol class="passos">
+    <li>Abra o app do seu banco e escolha <em>PIX › Ler QR Code</em> ou <em>Copia e Cola</em>.</li>
+    <li>Confira o valor e confirme.</li>
+    <li>Pronto: o pedido vai automaticamente para a cozinha.</li>
+  </ol>
+
+  <div class="simulacao">
+    <p><strong>Ambiente acadêmico.</strong> Não há banco real conectado. O botão abaixo faz o papel do aviso que o banco
+       enviaria à loja (webhook) quando o PIX fosse pago.</p>
+    <form method="post" action="{{ url_for('pedidos.confirmar_pix', codigo=pedido.codigo) }}">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <button class="btn btn--pri" type="submit">Simular confirmação do banco</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

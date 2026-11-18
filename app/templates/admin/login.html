@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block titulo %}Painel do lojista — entrar{% endblock %}
+{% block conteudo %}
+<form class="caixa estreito" method="post" action="{{ url_for('admin.login') }}">
+  <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+  <h1>Painel do lojista</h1>
+  <div class="campo"><label for="usuario">Usuário</label><input id="usuario" name="usuario" autocomplete="username" required autofocus></div>
+  <div class="campo"><label for="senha">Senha</label><input id="senha" name="senha" type="password" autocomplete="current-password" required></div>
+  <button class="btn btn--pri btn--bloco" type="submit">Entrar</button>
+</form>
+{% endblock %}

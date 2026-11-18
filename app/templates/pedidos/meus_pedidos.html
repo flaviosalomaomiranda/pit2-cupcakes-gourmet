@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block titulo %}Meus pedidos — Doce Nuvem{% endblock %}
+{% block conteudo %}
+<h1>Meus pedidos</h1>
+<form class="caixa busca" method="get" action="{{ url_for('pedidos.meus_pedidos') }}">
+  <label for="codigo">Código do pedido</label>
+  <input id="codigo" name="codigo" maxlength="8" placeholder="Ex.: K7M2Q9XA" autocapitalize="characters" required>
+  <button class="btn btn--pri" type="submit">Acompanhar</button>
+</form>
+{% if codigos %}
+<h2>Feitos neste aparelho</h2>
+<ul class="lista-links">
+  {% for c in codigos %}<li><a href="{{ url_for('pedidos.acompanhar', codigo=c) }}">Pedido {{ c }}</a></li>{% endfor %}
+</ul>
+{% else %}
+<p class="muted">Você ainda não fez pedidos neste aparelho.</p>
+{% endif %}
+{% endblock %}
