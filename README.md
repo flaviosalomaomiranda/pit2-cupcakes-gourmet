@@ -1,6 +1,6 @@
 # 🧁 Doce Nuvem Cupcakes Gourmet
 
-**Projeto Integrador Transdisciplinar em Engenharia de Software II** · Flavio · RGM 46724478
+**Projeto Integrador Transdisciplinar em Engenharia de Software II** · Flavio Salomão Miranda · RGM 46724478
 
 Loja virtual de cupcakes com vitrine, carrinho, embalagem presente, frete por CEP, pagamento por PIX ou cartão (simulado), acompanhamento do pedido e painel do lojista com alerta sonoro. É a construção do sistema planejado no **PIT I (Loja de Cupcakes Gourmet)**.
 
@@ -13,6 +13,7 @@ Loja virtual de cupcakes com vitrine, carrinho, embalagem presente, frete por CE
 | Front-end | HTML5, CSS3 e JavaScript puro, *mobile-first*, sem frameworks |
 | Testes | **111 automatizados**: 61 unitários, 39 de integração, 9 de front-end e 2 de sistema no navegador; **93% de cobertura** |
 | Modo | Codificação tradicional |
+| Repositório | https://github.com/flaviosalomaomiranda/pit2-cupcakes-gourmet |
 | Solução on-line | _link do Render, a preencher após o deploy_ |
 | Vídeo | _link do vídeo, a preencher_ |
 
