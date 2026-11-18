@@ -4,6 +4,8 @@
 
 Loja virtual de cupcakes com vitrine, carrinho, embalagem presente, frete por CEP, pagamento por PIX ou cartão (simulado), acompanhamento do pedido e painel do lojista com alerta sonoro. É a construção do sistema planejado no **PIT I (Loja de Cupcakes Gourmet)**.
 
+> 🔗 **Acesse a loja funcionando: https://doce-nuvem-cupcakes-q8jw.onrender.com** (o primeiro acesso pode levar até 1 minuto)
+
 ![Vitrine](docs/img/telas/13-vitrine-desktop.png)
 
 | | |
@@ -14,8 +16,8 @@ Loja virtual de cupcakes com vitrine, carrinho, embalagem presente, frete por CE
 | Testes | **121 automatizados**: 109 do back-end (unitários e integração), 10 de front-end e 2 de sistema no navegador; **93% de cobertura** |
 | Modo | Codificação tradicional |
 | Repositório | https://github.com/flaviosalomaomiranda/pit2-cupcakes-gourmet |
-| Solução on-line | _link do Render, a preencher após o deploy_ |
-| Vídeo | _link do vídeo, a preencher_ |
+| **Solução on-line** | **https://doce-nuvem-cupcakes-q8jw.onrender.com** · painel: `/admin` (admin / cupcake123) · o 1º acesso pode levar até 1 minuto (plano gratuito "acorda" o servidor) |
+| Vídeos | [Apresentação narrada](https://drive.google.com/file/d/1g8P_U38J98tSZqctoChAy5d_pg0n3zC4/view) · [Versão 1.1 após os testes](https://drive.google.com/file/d/1X7yFLM3aS6aVP4Cg9gzEkjk3or5MMKEk/view) |
 
 ## Como rodar
 
