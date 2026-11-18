@@ -1,4 +1,6 @@
 """Camada MODEL do MVC: acesso a dados (SQL parametrizado) e persistência das entidades."""
+from __future__ import annotations
+
 from datetime import datetime, timezone
 
 

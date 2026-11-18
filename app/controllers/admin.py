@@ -1,4 +1,6 @@
 """Controller do painel do lojista (US10)."""
+from __future__ import annotations
+
 import time
 from functools import wraps
 

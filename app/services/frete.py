@@ -1,4 +1,6 @@
 """Regra de negócio do frete por CEP (US08)."""
+from __future__ import annotations
+
 import re
 from dataclasses import dataclass
 

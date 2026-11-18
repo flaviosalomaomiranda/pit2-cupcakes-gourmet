@@ -1,5 +1,5 @@
 """Regras de negócio puras (sem acesso a banco nem HTTP): fáceis de testar isoladamente."""
-
+from __future__ import annotations
 
 class ValidacaoErro(ValueError):
     """Dado de entrada inválido. A mensagem é segura para exibir ao usuário."""

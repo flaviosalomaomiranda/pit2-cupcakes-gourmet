@@ -1,4 +1,6 @@
 """Validação e limpeza dos dados digitados no checkout."""
+from __future__ import annotations
+
 import re
 
 from . import ValidacaoErro

@@ -3,6 +3,8 @@
 O carrinho guarda apenas {id_do_cupcake: quantidade}. Preços NUNCA vêm do navegador:
 são sempre buscados no banco na hora de calcular, o que impede adulteração de valores.
 """
+from __future__ import annotations
+
 from dataclasses import dataclass
 
 from . import ValidacaoErro

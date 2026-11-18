@@ -1,4 +1,6 @@
 """Model: Usuário administrador (lojista)."""
+from __future__ import annotations
+
 from werkzeug.security import check_password_hash
 
 from ..db import get_db

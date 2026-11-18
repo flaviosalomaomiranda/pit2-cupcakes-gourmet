@@ -1,4 +1,6 @@
 """Controller do checkout: dados do cliente, endereço e pagamento (US06, US07, UC04)."""
+from __future__ import annotations
+
 from flask import Blueprint, current_app, flash, redirect, render_template, request, session, url_for
 
 from ..models import pedido as pedido_model

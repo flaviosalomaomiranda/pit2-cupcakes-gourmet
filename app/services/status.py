@@ -1,4 +1,6 @@
 """Máquina de estados do pedido (US09, US10). Impede saltos indevidos (ex.: ENTREGUE -> EM_PREPARO)."""
+from __future__ import annotations
+
 from . import RegraNegocioErro
 
 ROTULOS = {

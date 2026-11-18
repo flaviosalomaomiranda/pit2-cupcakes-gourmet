@@ -5,8 +5,11 @@ Arquitetura MVC:
   View       -> app/templates (Jinja2/HTML) + app/static (CSS/JS)
   Controller -> app/controllers (Blueprints Flask: recebem a requisição e decidem a resposta)
 """
+from __future__ import annotations
+
 import logging
 import secrets
+from datetime import timedelta, timezone
 from zoneinfo import ZoneInfo
 
 from flask import Flask, abort, render_template, request, session
@@ -18,7 +21,10 @@ from .services import formatar_brl
 from .services.frete import formatar_cep
 from .services.status import ROTULOS
 
-FUSO_LOJA = ZoneInfo("America/Porto_Velho")
+try:
+    FUSO_LOJA = ZoneInfo("America/Porto_Velho")
+except Exception:  # Windows sem base de fusos (pacote tzdata ausente): Porto Velho é UTC-4 o ano todo
+    FUSO_LOJA = timezone(timedelta(hours=-4), "America/Porto_Velho")
 
 
 def create_app(config_obj=Config, **overrides) -> Flask:

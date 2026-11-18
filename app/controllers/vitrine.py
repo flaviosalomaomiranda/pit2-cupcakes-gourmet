@@ -1,4 +1,6 @@
 """Controller da vitrine (US01, US02, US03)."""
+from __future__ import annotations
+
 from flask import Blueprint, abort, make_response, render_template, request
 
 from ..models import cupcake as cupcake_model

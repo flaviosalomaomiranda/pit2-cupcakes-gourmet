@@ -1,4 +1,6 @@
 """Controller do carrinho (US04, US05, US06, US08)."""
+from __future__ import annotations
+
 from flask import Blueprint, current_app, flash, jsonify, redirect, render_template, request, session, url_for
 
 from ..models import cupcake as cupcake_model

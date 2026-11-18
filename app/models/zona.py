@@ -1,4 +1,6 @@
 """Model: Zona de entrega."""
+from __future__ import annotations
+
 from ..db import get_db
 from ..services.frete import Zona
 

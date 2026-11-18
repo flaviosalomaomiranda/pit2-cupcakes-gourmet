@@ -6,6 +6,8 @@ IMPORTANTE (limite de escopo do MVP acadêmico): não há integração real com 
 - Cartão: validação real de formato (Luhn, validade, CVV); a autorização é SIMULADA.
   O número completo nunca é salvo — só os 4 últimos dígitos.
 """
+from __future__ import annotations
+
 import re
 from datetime import date
 

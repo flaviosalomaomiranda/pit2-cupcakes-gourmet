@@ -1,4 +1,6 @@
 """Model: Cupcake e Categoria."""
+from __future__ import annotations
+
 from ..db import get_db
 
 

@@ -3,6 +3,8 @@
 A criação do pedido é TRANSACIONAL: cliente + pedido + itens + pagamento + histórico
 são gravados juntos; se qualquer passo falhar, nada fica pela metade (rollback).
 """
+from __future__ import annotations
+
 import secrets
 from datetime import datetime, timedelta, timezone
 

@@ -1,4 +1,6 @@
 """Controller de acompanhamento de pedido e tela do PIX (US07, US09)."""
+from __future__ import annotations
+
 import segno
 from flask import Blueprint, abort, flash, redirect, render_template, request, session, url_for
 

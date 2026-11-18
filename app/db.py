@@ -1,4 +1,6 @@
 """Acesso ao banco SQLite: uma conexão por requisição, criação do esquema e carga inicial."""
+from __future__ import annotations
+
 import sqlite3
 from pathlib import Path
 

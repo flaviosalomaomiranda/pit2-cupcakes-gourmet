@@ -1,4 +1,6 @@
 """Camada CONTROLLER do MVC: Blueprints que recebem requisições, chamam o Model e escolhem a View."""
+from __future__ import annotations
+
 from flask import current_app, session
 
 from ..services.carrinho import Carrinho
