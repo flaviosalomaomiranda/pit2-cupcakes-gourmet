@@ -202,7 +202,7 @@ def test_cartao_recusado_e_carrinho_vazio(servidor, navegador):
     page.fill("#validade", "12/35")
     page.fill("#cvv", "123")
     page.click("[data-enviar]")
-    assert page.inner_text(".erro-inline") == "Número do cartão inválido."
+    expect(page.locator("#numero_cartao ~ .erro-inline")).to_have_text("Número do cartão inválido.")
 
     page.goto(servidor + "/nao-existe")
     _foto(page, "15-erro-404", pagina_inteira=False)

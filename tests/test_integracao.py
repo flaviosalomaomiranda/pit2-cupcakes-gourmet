@@ -155,6 +155,26 @@ def test_uc04_cartao_nunca_e_salvo_completo(client, csrf, app):
     assert "cvv" not in dump.lower()               # não existe nem coluna de CVV
 
 
+def test_v11_email_e_opcional(client, csrf, app):
+    """Fernando Miranda: e-mail não precisa ser obrigatório."""
+    encher_carrinho_e_frete(client, csrf)
+    r = client.post("/checkout/", data={**DADOS_CLIENTE, "email": "", "_csrf": csrf, "metodo": "CARTAO",
+                                        "numero_cartao": "4111111111111111", "nome_cartao": "MARIA", "validade": "12/35", "cvv": "123"})
+    assert r.status_code == 302
+    with app.app_context():
+        from app.db import get_db
+        assert get_db().execute("SELECT email FROM cliente").fetchone()[0] == ""
+
+
+def test_v11_erro_do_cartao_aparece_junto_ao_pagamento(client, csrf):
+    """Fernando Miranda não conseguiu pagar com cartão: no celular a mensagem ficava só no topo da página."""
+    encher_carrinho_e_frete(client, csrf)
+    html = client.post("/checkout/", data={**DADOS_CLIENTE, "_csrf": csrf, "metodo": "CARTAO",
+                                           "numero_cartao": "4111111111111111", "nome_cartao": "MARIA",
+                                           "validade": "12/20", "cvv": "123"}).get_data(as_text=True)
+    assert re.search(r'id="validade"[^>]*aria-invalid="true"[^>]*>\s*<p class="erro-inline" id="erro-validade" role="alert">Cartão vencido.', html)
+
+
 def test_uc04_cartao_recusado_nao_cria_pedido(client, csrf, app):
     encher_carrinho_e_frete(client, csrf)
     r = client.post("/checkout/", data={**DADOS_CLIENTE, "_csrf": csrf, "metodo": "CARTAO",
@@ -391,7 +411,8 @@ def test_v11_migracao_preserva_pedidos_de_banco_antigo(tmp_path):
         db = get_db()
         assert db.execute("SELECT COUNT(*) FROM pedido WHERE codigo='ANTIGO01'").fetchone()[0] == 1
         assert db.execute("SELECT COUNT(*) FROM cupcake").fetchone()[0] == 15
-        assert db.execute("PRAGMA user_version").fetchone()[0] == 2
+        assert db.execute("PRAGMA user_version").fetchone()[0] == 3
+        assert db.execute("SELECT COUNT(*) FROM cliente").fetchone()[0] == 1
     create_app(TestConfig, DATABASE=str(caminho))  # segunda vez: nada a migrar, nada duplica
     con = sqlite3.connect(caminho)
     assert con.execute("SELECT COUNT(*) FROM cupcake").fetchone()[0] == 15

@@ -11,7 +11,7 @@ Loja virtual de cupcakes com vitrine, carrinho, embalagem presente, frete por CE
 | Back-end | Python 3 + Flask, padrão **MVC** |
 | Banco | SQLite 3 (script físico em `database/schema.sql`) |
 | Front-end | HTML5, CSS3 e JavaScript puro, *mobile-first*, sem frameworks |
-| Testes | **111 automatizados**: 61 unitários, 39 de integração, 9 de front-end e 2 de sistema no navegador; **93% de cobertura** |
+| Testes | **121 automatizados**: 109 do back-end (unitários e integração), 10 de front-end e 2 de sistema no navegador; **93% de cobertura** |
 | Modo | Codificação tradicional |
 | Repositório | https://github.com/flaviosalomaomiranda/pit2-cupcakes-gourmet |
 | Solução on-line | _link do Render, a preencher após o deploy_ |

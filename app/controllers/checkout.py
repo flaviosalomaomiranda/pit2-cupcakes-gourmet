@@ -78,10 +78,12 @@ def finalizar():
         )
     except ValidacaoErro as e:
         flash(e.mensagem, "erro")
-        return render_template("checkout/checkout.html", **resumo, form=seguro, erro_campo=e.campo), 422
+        return render_template("checkout/checkout.html", **resumo, form=seguro, erro_campo=e.campo,
+                               erro_msg=e.mensagem), 422
     except RegraNegocioErro as e:
         flash(e.mensagem, "erro")
-        return render_template("checkout/checkout.html", **resumo, form=seguro, erro_campo="pagamento"), 422
+        return render_template("checkout/checkout.html", **resumo, form=seguro, erro_campo="pagamento",
+                               erro_msg=e.mensagem), 422
 
     current_app.logger.info("Pedido %s criado (%s)", codigo, pagamento["metodo"])
     for chave in ("carrinho", "embalagem_presente", "mensagem_presente", "checkout_form"):

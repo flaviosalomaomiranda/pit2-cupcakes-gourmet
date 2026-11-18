@@ -34,7 +34,8 @@ test('máscara de cartão agrupa de 4 em 4', () => {
 test('máscara de validade MM/AA', () => {
   assert.equal(U.mascaraValidade('1'), '1');
   assert.equal(U.mascaraValidade('1235'), '12/35');
-  assert.equal(U.mascaraValidade('12/3599'), '12/35');
+  assert.equal(U.mascaraValidade('122030'), '12/2030');   // ano com 4 dígitos (v1.1)
+  assert.equal(U.mascaraValidade('12/203099'), '12/2030');
 });
 
 test('algoritmo de Luhn igual ao do back-end', () => {

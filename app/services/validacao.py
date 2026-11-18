@@ -25,7 +25,7 @@ def validar_cliente(dados: dict) -> dict:
     if len(telefone) not in (10, 11):
         raise ValidacaoErro("Telefone deve ter DDD + número (10 ou 11 dígitos).", campo="telefone")
     email = (dados.get("email") or "").strip().lower()
-    if not _EMAIL_RE.match(email) or len(email) > 120:
+    if email and (not _EMAIL_RE.match(email) or len(email) > 120):  # opcional desde a v1.1
         raise ValidacaoErro("E-mail inválido.", campo="email")
     return {"nome": nome, "telefone": telefone, "email": email}
 

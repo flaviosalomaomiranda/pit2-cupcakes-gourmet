@@ -130,6 +130,10 @@ def test_validar_cartao_erros(numero, validade, cvv, nome, campo):
     assert e.value.campo == campo
 
 
+def test_validade_com_ano_de_4_digitos():
+    assert validar_cartao("4111111111111111", "12/2030", "123", "MARIA", hoje=date(2026, 11, 17)) == "1111"
+
+
 def test_cartao_do_mes_corrente_ainda_vale():
     assert validar_cartao("4111111111111111", "11/26", "123", "MARIA", hoje=date(2026, 11, 17)) == "1111"
 

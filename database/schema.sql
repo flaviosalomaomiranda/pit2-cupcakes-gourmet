@@ -66,7 +66,7 @@ CREATE TABLE cliente (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
     nome        TEXT    NOT NULL CHECK (length(trim(nome)) BETWEEN 3 AND 80),
     telefone    TEXT    NOT NULL CHECK (length(telefone) BETWEEN 10 AND 11),
-    email       TEXT    NOT NULL CHECK (email LIKE '%_@_%._%'),
+    email       TEXT    NOT NULL DEFAULT '' CHECK (email = '' OR email LIKE '%_@_%._%'),  -- opcional (v1.1)
     criado_em   TEXT    NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))
 );
 CREATE INDEX ix_cliente_email ON cliente(email);

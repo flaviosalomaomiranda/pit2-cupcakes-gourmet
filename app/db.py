@@ -66,6 +66,7 @@ def aplicar_migracoes(db=None) -> list[str]:
             if "enfeite" not in cols:
                 db.execute("ALTER TABLE cupcake ADD COLUMN enfeite TEXT NOT NULL DEFAULT 'cereja' CHECK (enfeite IN "
                            "('cereja','morango','chocolate','limao','ervas','acai','cupuacu','coco','nenhum'))")
+        db.commit()
         db.executescript(arq.read_text(encoding="utf-8"))
         db.execute(f"PRAGMA user_version = {numero}")
         db.commit()

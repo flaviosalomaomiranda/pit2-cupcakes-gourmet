@@ -2,61 +2,61 @@ TAP version 13
 # Subtest: máscara de CEP é progressiva e limita a 8 dígitos
 ok 1 - máscara de CEP é progressiva e limita a 8 dígitos
   ---
-  duration_ms: 0.629928
+  duration_ms: 0.679326
   type: 'test'
   ...
 # Subtest: validação de CEP
 ok 2 - validação de CEP
   ---
-  duration_ms: 0.166331
+  duration_ms: 0.109811
   type: 'test'
   ...
 # Subtest: máscara de telefone fixo e celular
 ok 3 - máscara de telefone fixo e celular
   ---
-  duration_ms: 0.102617
+  duration_ms: 0.099059
   type: 'test'
   ...
 # Subtest: máscara de cartão agrupa de 4 em 4
 ok 4 - máscara de cartão agrupa de 4 em 4
   ---
-  duration_ms: 0.107903
+  duration_ms: 0.114472
   type: 'test'
   ...
 # Subtest: máscara de validade MM/AA
 ok 5 - máscara de validade MM/AA
   ---
-  duration_ms: 0.078381
+  duration_ms: 0.081229
   type: 'test'
   ...
 # Subtest: algoritmo de Luhn igual ao do back-end
 ok 6 - algoritmo de Luhn igual ao do back-end
   ---
-  duration_ms: 0.119039
+  duration_ms: 0.117148
   type: 'test'
   ...
 # Subtest: quantidade fica entre mínimo e máximo
 ok 7 - quantidade fica entre mínimo e máximo
   ---
-  duration_ms: 0.171312
+  duration_ms: 0.312758
   type: 'test'
   ...
 # Subtest: contagem regressiva do PIX
 ok 8 - contagem regressiva do PIX
   ---
-  duration_ms: 0.087806
+  duration_ms: 0.095059
   type: 'test'
   ...
 # Subtest: formatação de moeda igual ao back-end
 ok 9 - formatação de moeda igual ao back-end
   ---
-  duration_ms: 0.299214
+  duration_ms: 0.243671
   type: 'test'
   ...
 # Subtest: busca ao vivo ignora acentos e maiúsculas (avaliação Nataska)
 ok 10 - busca ao vivo ignora acentos e maiúsculas (avaliação Nataska)
   ---
-  duration_ms: 0.372676
+  duration_ms: 0.393414
   type: 'test'
   ...
 1..10
@@ -67,4 +67,4 @@ ok 10 - busca ao vivo ignora acentos e maiúsculas (avaliação Nataska)
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 49.628867
+# duration_ms 45.349108

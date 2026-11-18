@@ -9,6 +9,6 @@
 | 1:00–2:15 | Celular ou janela estreita: vitrine → filtro → detalhe → carrinho | Mostrar o filtro, os ingredientes, o + e −, a embalagem presente, o CEP recusado e depois o aceito. "Repare que o contador do carrinho atualiza na hora." |
 | 2:15–3:00 | Checkout com e-mail errado → PIX → simular confirmação | "Se eu erro o e-mail, o sistema destaca o campo e não apaga o que digitei. No PIX, ele gera um código no padrão oficial do Banco Central, válido por 15 minutos." |
 | 3:00–3:40 | Painel `/admin` | "No painel, o lojista recebe o pedido com alerta sonoro, vê que é presente e avança o status." Depois, mostrar a linha do tempo atualizada no cliente. |
-| 3:40–4:30 | Terminal rodando `python -m pytest tests -v` | "São 111 testes automatizados: unitários, de integração e de sistema no navegador, todos passando, com 93% de cobertura. Os testes acharam um defeito real: o campo do cartão tinha o mesmo nome do número da casa. Corrigi e documentei no laudo." |
+| 3:40–4:30 | Terminal rodando `python -m pytest tests -v` | "São 121 testes automatizados: unitários, de integração e de sistema no navegador, todos passando, com 93% de cobertura. Os testes acharam um defeito real: o campo do cartão tinha o mesmo nome do número da casa. Corrigi e documentei no laudo." |
 | 4:30–5:15 | `03-resultado-avaliacoes.md` | "Cinco pessoas testaram. [Cite 1 ou 2 sugestões reais e o que você mudou.]" |
 | 5:15–5:30 | Roadmap | "Próximos passos: gateway de pagamento real, cadastro de clientes e PostgreSQL. Obrigado!" |

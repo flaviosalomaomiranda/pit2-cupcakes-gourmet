@@ -12,7 +12,7 @@
 | Sistema (ponta a ponta) | Jornada completa no navegador real, celular e desktop, cliente e lojista, sem erro de JavaScript | Playwright (Chromium) | `tests_e2e/test_sistema_navegador.py` | 2 roteiros (≈60 verificações) | ✅ 2/2 |
 | Aceitação | Uso real por 5 pessoas | Formulário de avaliação | `02-formulario-avaliacao.md` | 5 | ⏳ ver seção 6 |
 
-**Total automatizado (v1.1): 118 testes, 100% aprovados (106 pytest + 10 front-end + 2 de sistema). Cobertura de código do back-end: 93%** (relatório completo em `evidencias/pytest-unitarios-integracao.txt`).
+**Total automatizado (v1.1): 121 testes, 100% aprovados (109 pytest + 10 front-end + 2 de sistema). Cobertura de código do back-end: 93%** (relatório completo em `evidencias/pytest-unitarios-integracao.txt`).
 
 Como reproduzir:
 
@@ -73,6 +73,8 @@ python -m pytest tests_e2e -v            # sistema (gera as capturas em docs/img
 | **DEF-05** | Avaliador Luiz Cláudio | CEP 76800-000 (geral de Porto Velho) era recusado | Faixa da zona Centro começava em 76800-001 | Migração 002 corrige a faixa; mensagem informa os CEPs atendidos | `test_v11_cep_geral_de_porto_velho_e_aceito` |
 | **DEF-06** | Avaliadora Nataska Wanssa | Busca anterior continuava aplicada ao trocar de categoria | Links das categorias repassavam o termo de busca | Categorias limpam a busca; link "Limpar busca" | `test_v11_trocar_categoria_limpa_a_busca` |
 | **DEF-07** | Avaliador Leonardo Gobbi (usabilidade/estética) | Imagens pouco atrativas | Ilustrações planas e repetidas | Ilustrações com volume e enfeite por sabor; fotos reais no Roadmap | captura da vitrine v1.1 |
+| **DEF-08** | Avaliador Fernando Miranda | Não conseguia pagar com cartão | Máscara da validade limitada a 4 dígitos: 12/2030 virava 12/20 (vencido); a mensagem de erro ficava só no topo da página | Máscara MM/AA ou MM/AAAA; mensagem de erro ao lado do campo, com `role=alert` | testes de front e de integração específicos |
+| **DEF-09** | Avaliador Fernando Miranda (usabilidade) | E-mail obrigatório sem necessidade | Requisito excessivo no PIT I | E-mail opcional (migração 003 recria a tabela preservando dados) | `test_v11_email_e_opcional` |
 
 **Situação atual:** nenhum defeito conhecido em aberto nos testes automatizados. Os defeitos relatados pelos avaliadores entram na seção 6.
 

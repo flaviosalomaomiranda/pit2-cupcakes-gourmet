@@ -28,8 +28,8 @@ Para zerar o banco: apague `instance/cupcakes.db` ou rode `flask --app run init-
 
 ### Rodar os testes
 ```bash
-python -m pytest tests -v                      # 100 testes unitários e de integração
-node --test tests_front/utils.test.js          # 9 testes do JavaScript
+python -m pytest tests -v                      # 109 testes unitários e de integração
+node --test tests_front/utils.test.js          # 10 testes do JavaScript
 pip install playwright && python -m playwright install chromium
 python -m pytest tests_e2e -v                  # 2 testes de sistema no navegador (geram as capturas)
 ```
@@ -41,9 +41,9 @@ python -m pytest tests_e2e -v                  # 2 testes de sistema no navegado
 3. **Adicionar:** "+ Adicionar" põe 1 unidade no carrinho; o número no ícone do carrinho aumenta.
 4. **Carrinho:** ajuste as quantidades (− até zero remove), marque a **embalagem presente** e escreva a mensagem do cartão (opcional).
 5. **CEP:** digite o CEP e toque em "Calcular". Faixas atendidas na demonstração: 76800-001 a 76834-999 (Porto Velho).
-6. **Pagamento:** preencha nome, celular, e-mail e endereço e escolha:
+6. **Pagamento:** preencha nome, celular, e-mail (opcional) e endereço e escolha:
    - **PIX:** aparece o QR Code e o "Copia e Cola", válidos por 15 minutos. No ambiente acadêmico, toque em **"Simular confirmação do banco"**.
-   - **Cartão:** use `4111 1111 1111 1111` (aprovado) ou `4000 0000 0000 0002` (recusado), com validade futura e qualquer CVV de 3 dígitos.
+   - **Cartão:** use `4111 1111 1111 1111` (aprovado) ou `4000 0000 0000 0002` (recusado), com validade futura (MM/AA ou MM/AAAA) e qualquer CVV de 3 dígitos.
 7. **Acompanhar:** a linha do tempo mostra Recebido → Em preparo → Saiu para entrega → Entregue, com horários. Guarde o **código de 8 letras**: em "Meus pedidos" dá para consultar de outro aparelho.
 
 ## 3. Uso pelo lojista

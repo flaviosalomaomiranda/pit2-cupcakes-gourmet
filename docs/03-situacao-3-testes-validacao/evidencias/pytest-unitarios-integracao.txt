@@ -3,7 +3,7 @@ platform linux -- Python 3.13.18, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/p
 cachedir: .pytest_cache
 rootdir: /home/claude/pit2-cupcakes-gourmet
 plugins: platformdirs-4.13.5, anyio-4.15.1, cov-7.1.0
-collecting ... collected 106 items
+collecting ... collected 109 items
 
 tests/test_integracao.py::test_us01_vitrine_lista_todos_os_cupcakes_com_preco PASSED [  0%]
 tests/test_integracao.py::test_us02_filtro_por_categoria PASSED          [  1%]
@@ -17,40 +17,42 @@ tests/test_integracao.py::test_us04_adicionar_e_contador_do_topo PASSED  [  8%]
 tests/test_integracao.py::test_us04_adicionar_via_javascript_retorna_json PASSED [  9%]
 tests/test_integracao.py::test_us04_mais_menos_e_zero_remove PASSED      [ 10%]
 tests/test_integracao.py::test_us04_carrinho_vazio_tem_botao_ver_cupcakes PASSED [ 11%]
-tests/test_integracao.py::test_us04_limite_de_50_por_sabor PASSED        [ 12%]
-tests/test_integracao.py::test_us05_embalagem_presente_soma_ao_total PASSED [ 13%]
-tests/test_integracao.py::test_us08_frete_dentro_da_area PASSED          [ 14%]
-tests/test_integracao.py::test_us08_frete_fora_da_area_bloqueia_pagamento PASSED [ 15%]
-tests/test_integracao.py::test_us08_api_frete PASSED                     [ 16%]
+tests/test_integracao.py::test_us04_limite_de_50_por_sabor PASSED        [ 11%]
+tests/test_integracao.py::test_us05_embalagem_presente_soma_ao_total PASSED [ 12%]
+tests/test_integracao.py::test_us08_frete_dentro_da_area PASSED          [ 13%]
+tests/test_integracao.py::test_us08_frete_fora_da_area_bloqueia_pagamento PASSED [ 14%]
+tests/test_integracao.py::test_us08_api_frete PASSED                     [ 15%]
 tests/test_integracao.py::test_uc04_checkout_exige_carrinho PASSED       [ 16%]
 tests/test_integracao.py::test_uc04_checkout_exige_frete PASSED          [ 17%]
 tests/test_integracao.py::test_uc04_cartao_aprovado_cria_pedido_recebido PASSED [ 18%]
 tests/test_integracao.py::test_uc04_cartao_nunca_e_salvo_completo PASSED [ 19%]
-tests/test_integracao.py::test_uc04_cartao_recusado_nao_cria_pedido PASSED [ 20%]
-tests/test_integracao.py::test_uc04_validacao_mostra_campo_com_erro PASSED [ 21%]
-tests/test_integracao.py::test_uc04_pix_fluxo_completo PASSED            [ 22%]
-tests/test_integracao.py::test_uc04_pix_expira_em_15_min_e_cancela PASSED [ 23%]
-tests/test_integracao.py::test_us09_acompanhar_por_codigo PASSED         [ 24%]
-tests/test_integracao.py::test_us10_painel_exige_login PASSED            [ 25%]
-tests/test_integracao.py::test_us10_login_senha_errada PASSED            [ 26%]
-tests/test_integracao.py::test_us10_bloqueio_apos_5_tentativas PASSED    [ 27%]
-tests/test_integracao.py::test_us10_lojista_avanca_status_ate_entregue PASSED [ 28%]
-tests/test_integracao.py::test_us10_concorrencia_status_desatualizado PASSED [ 29%]
-tests/test_integracao.py::test_us10_api_resumo_para_alerta PASSED        [ 30%]
-tests/test_integracao.py::test_post_sem_csrf_e_rejeitado PASSED          [ 31%]
-tests/test_integracao.py::test_cabecalhos_de_seguranca PASSED            [ 32%]
+tests/test_integracao.py::test_v11_email_e_opcional PASSED               [ 20%]
+tests/test_integracao.py::test_v11_erro_do_cartao_aparece_junto_ao_pagamento PASSED [ 21%]
+tests/test_integracao.py::test_uc04_cartao_recusado_nao_cria_pedido PASSED [ 22%]
+tests/test_integracao.py::test_uc04_validacao_mostra_campo_com_erro PASSED [ 22%]
+tests/test_integracao.py::test_uc04_pix_fluxo_completo PASSED            [ 23%]
+tests/test_integracao.py::test_uc04_pix_expira_em_15_min_e_cancela PASSED [ 24%]
+tests/test_integracao.py::test_us09_acompanhar_por_codigo PASSED         [ 25%]
+tests/test_integracao.py::test_us10_painel_exige_login PASSED            [ 26%]
+tests/test_integracao.py::test_us10_login_senha_errada PASSED            [ 27%]
+tests/test_integracao.py::test_us10_bloqueio_apos_5_tentativas PASSED    [ 28%]
+tests/test_integracao.py::test_us10_lojista_avanca_status_ate_entregue PASSED [ 29%]
+tests/test_integracao.py::test_us10_concorrencia_status_desatualizado PASSED [ 30%]
+tests/test_integracao.py::test_us10_api_resumo_para_alerta PASSED        [ 31%]
+tests/test_integracao.py::test_post_sem_csrf_e_rejeitado PASSED          [ 32%]
+tests/test_integracao.py::test_cabecalhos_de_seguranca PASSED            [ 33%]
 tests/test_integracao.py::test_xss_na_busca_e_escapado PASSED            [ 33%]
-tests/test_integracao.py::test_sql_injection_na_busca_nao_quebra PASSED  [ 33%]
-tests/test_integracao.py::test_preco_vem_do_banco_e_nao_do_navegador PASSED [ 34%]
-tests/test_integracao.py::test_banco_rejeita_total_inconsistente PASSED  [ 35%]
-tests/test_integracao.py::test_banco_rejeita_status_invalido_e_fk PASSED [ 36%]
-tests/test_integracao.py::test_v11_categoria_bebidas_com_agua_e_coca PASSED [ 37%]
-tests/test_integracao.py::test_v11_bebida_vai_ao_carrinho_e_ao_pedido PASSED [ 38%]
-tests/test_integracao.py::test_v11_imagens_diferentes_por_sabor_e_bebida PASSED [ 39%]
-tests/test_integracao.py::test_v11_trocar_categoria_limpa_a_busca PASSED [ 40%]
-tests/test_integracao.py::test_v11_cep_geral_de_porto_velho_e_aceito PASSED [ 41%]
-tests/test_integracao.py::test_v11_migracao_preserva_pedidos_de_banco_antigo PASSED [ 42%]
-tests/test_unit_servicos.py::test_formatar_brl[0-R$ 0,00] PASSED         [ 43%]
+tests/test_integracao.py::test_sql_injection_na_busca_nao_quebra PASSED  [ 34%]
+tests/test_integracao.py::test_preco_vem_do_banco_e_nao_do_navegador PASSED [ 35%]
+tests/test_integracao.py::test_banco_rejeita_total_inconsistente PASSED  [ 36%]
+tests/test_integracao.py::test_banco_rejeita_status_invalido_e_fk PASSED [ 37%]
+tests/test_integracao.py::test_v11_categoria_bebidas_com_agua_e_coca PASSED [ 38%]
+tests/test_integracao.py::test_v11_bebida_vai_ao_carrinho_e_ao_pedido PASSED [ 39%]
+tests/test_integracao.py::test_v11_imagens_diferentes_por_sabor_e_bebida PASSED [ 40%]
+tests/test_integracao.py::test_v11_trocar_categoria_limpa_a_busca PASSED [ 41%]
+tests/test_integracao.py::test_v11_cep_geral_de_porto_velho_e_aceito PASSED [ 42%]
+tests/test_integracao.py::test_v11_migracao_preserva_pedidos_de_banco_antigo PASSED [ 43%]
+tests/test_unit_servicos.py::test_formatar_brl[0-R$ 0,00] PASSED         [ 44%]
 tests/test_unit_servicos.py::test_formatar_brl[5-R$ 0,05] PASSED         [ 44%]
 tests/test_unit_servicos.py::test_formatar_brl[1250-R$ 12,50] PASSED     [ 45%]
 tests/test_unit_servicos.py::test_formatar_brl[123456-R$ 1.234,56] PASSED [ 46%]
@@ -58,11 +60,11 @@ tests/test_unit_servicos.py::test_formatar_brl[-990--R$ 9,90] PASSED     [ 47%]
 tests/test_unit_servicos.py::test_normalizar_cep_aceita_formatos[76801-000] PASSED [ 48%]
 tests/test_unit_servicos.py::test_normalizar_cep_aceita_formatos[76801000] PASSED [ 49%]
 tests/test_unit_servicos.py::test_normalizar_cep_aceita_formatos[ 76.801-000 ] PASSED [ 50%]
-tests/test_unit_servicos.py::test_normalizar_cep_rejeita_invalidos[] PASSED [ 50%]
-tests/test_unit_servicos.py::test_normalizar_cep_rejeita_invalidos[None] PASSED [ 51%]
-tests/test_unit_servicos.py::test_normalizar_cep_rejeita_invalidos[1234] PASSED [ 52%]
-tests/test_unit_servicos.py::test_normalizar_cep_rejeita_invalidos[768010001] PASSED [ 53%]
-tests/test_unit_servicos.py::test_normalizar_cep_rejeita_invalidos[abcde-fgh] PASSED [ 54%]
+tests/test_unit_servicos.py::test_normalizar_cep_rejeita_invalidos[] PASSED [ 51%]
+tests/test_unit_servicos.py::test_normalizar_cep_rejeita_invalidos[None] PASSED [ 52%]
+tests/test_unit_servicos.py::test_normalizar_cep_rejeita_invalidos[1234] PASSED [ 53%]
+tests/test_unit_servicos.py::test_normalizar_cep_rejeita_invalidos[768010001] PASSED [ 54%]
+tests/test_unit_servicos.py::test_normalizar_cep_rejeita_invalidos[abcde-fgh] PASSED [ 55%]
 tests/test_unit_servicos.py::test_normalizar_cep_rejeita_invalidos[00000-000] PASSED [ 55%]
 tests/test_unit_servicos.py::test_formatar_cep PASSED                    [ 56%]
 tests/test_unit_servicos.py::test_calcular_frete_por_zona_e_limites PASSED [ 57%]
@@ -87,17 +89,18 @@ tests/test_unit_servicos.py::test_validar_cartao_ok_devolve_so_final PASSED [ 74
 tests/test_unit_servicos.py::test_validar_cartao_erros[4111111111111112-12/30-123-MARIA-numero_cartao] PASSED [ 75%]
 tests/test_unit_servicos.py::test_validar_cartao_erros[4111111111111111-12/30-123--nome_cartao] PASSED [ 76%]
 tests/test_unit_servicos.py::test_validar_cartao_erros[4111111111111111-1230-123-MARIA-validade] PASSED [ 77%]
-tests/test_unit_servicos.py::test_validar_cartao_erros[4111111111111111-13/30-123-MARIA-validade] PASSED [ 78%]
-tests/test_unit_servicos.py::test_validar_cartao_erros[4111111111111111-10/26-123-MARIA-validade] PASSED [ 79%]
-tests/test_unit_servicos.py::test_validar_cartao_erros[4111111111111111-12/30-12-MARIA-cvv] PASSED [ 80%]
+tests/test_unit_servicos.py::test_validar_cartao_erros[4111111111111111-13/30-123-MARIA-validade] PASSED [ 77%]
+tests/test_unit_servicos.py::test_validar_cartao_erros[4111111111111111-10/26-123-MARIA-validade] PASSED [ 78%]
+tests/test_unit_servicos.py::test_validar_cartao_erros[4111111111111111-12/30-12-MARIA-cvv] PASSED [ 79%]
+tests/test_unit_servicos.py::test_validade_com_ano_de_4_digitos PASSED   [ 80%]
 tests/test_unit_servicos.py::test_cartao_do_mes_corrente_ainda_vale PASSED [ 81%]
 tests/test_unit_servicos.py::test_autorizacao_simulada PASSED            [ 82%]
 tests/test_unit_servicos.py::test_crc16_vetor_de_referencia PASSED       [ 83%]
-tests/test_unit_servicos.py::test_pix_copia_e_cola_estrutura_e_crc PASSED [ 83%]
-tests/test_unit_servicos.py::test_pix_valor_invalido PASSED              [ 84%]
-tests/test_unit_servicos.py::test_validar_cliente_limpa_dados PASSED     [ 85%]
-tests/test_unit_servicos.py::test_validar_cliente_erros[dados0-nome] PASSED [ 86%]
-tests/test_unit_servicos.py::test_validar_cliente_erros[dados1-telefone] PASSED [ 87%]
+tests/test_unit_servicos.py::test_pix_copia_e_cola_estrutura_e_crc PASSED [ 84%]
+tests/test_unit_servicos.py::test_pix_valor_invalido PASSED              [ 85%]
+tests/test_unit_servicos.py::test_validar_cliente_limpa_dados PASSED     [ 86%]
+tests/test_unit_servicos.py::test_validar_cliente_erros[dados0-nome] PASSED [ 87%]
+tests/test_unit_servicos.py::test_validar_cliente_erros[dados1-telefone] PASSED [ 88%]
 tests/test_unit_servicos.py::test_validar_cliente_erros[dados2-email] PASSED [ 88%]
 tests/test_unit_servicos.py::test_validar_endereco_complemento_opcional PASSED [ 89%]
 tests/test_unit_servicos.py::test_mensagem_presente_limite PASSED        [ 90%]
@@ -110,16 +113,11 @@ tests/test_unit_servicos.py::test_transicoes_invalidas[ENTREGUE-EM_PREPARO] PASS
 tests/test_unit_servicos.py::test_transicoes_invalidas[RECEBIDO-ENTREGUE] PASSED [ 97%]
 tests/test_unit_servicos.py::test_transicoes_invalidas[CANCELADO-RECEBIDO] PASSED [ 98%]
 tests/test_unit_servicos.py::test_transicoes_invalidas[SAIU_PARA_ENTREGA-CANCELADO] PASSED [ 99%]
-tests/test_unit_servicos.py::test_transicoes_invalidas[RECEBIDO-INEXISTENTE] PASSED [100%]
+tests/test_unit_servicos.py::test_transicoes_invalidas[RECEBIDO-INEXISTENTE] PASSED [100%]/usr/local/lib/python3.13/ast.py:50: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7fbb13fec040>
+  return compile(source, filename, mode, flags,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
 
-=============================== warnings summary ===============================
-tests/test_unit_servicos.py::test_validar_cartao_erros[4111111111111111-12/30-12-MARIA-cvv]
-  /usr/local/lib/python3.13/site-packages/pluggy/_callers.py:93: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f53fe8e0310>
-    for hook_impl in reversed(hook_impls):
-  Enable tracemalloc to get traceback where the object was allocated.
-  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
 
--- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 ================================ tests coverage ================================
 _______________ coverage: platform linux, python 3.13.18-final-0 _______________
 
@@ -133,7 +131,7 @@ app/controllers/carrinho.py      97     12    88%
 app/controllers/checkout.py      63      3    95%
 app/controllers/pedidos.py       46      2    96%
 app/controllers/vitrine.py       29      1    97%
-app/db.py                        59      2    97%
+app/db.py                        60      2    97%
 app/models/__init__.py            6      0   100%
 app/models/admin.py               8      0   100%
 app/models/cupcake.py            26      0   100%
@@ -146,5 +144,5 @@ app/services/pagamento.py        58      0   100%
 app/services/status.py           11      0   100%
 app/services/validacao.py        29      1    97%
 -------------------------------------------------
-TOTAL                           872     58    93%
-======================== 106 passed, 1 warning in 6.32s ========================
+TOTAL                           873     58    93%
+============================= 109 passed in 6.19s ==============================

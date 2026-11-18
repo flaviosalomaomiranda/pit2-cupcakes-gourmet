@@ -34,8 +34,10 @@
     return d.replace(/(.{4})/g, '$1 ').trim();
   }
 
+  /** aceita MM/AA e MM/AAAA. Antes (v1.0) cortava em 4 dígitos: quem digitava 12/2030
+   *  ficava com 12/20 e recebia "Cartão vencido" (defeito relatado por Fernando Miranda). */
   function mascaraValidade(texto) {
-    var d = soDigitos(texto).slice(0, 4);
+    var d = soDigitos(texto).slice(0, 6);
     return d.length > 2 ? d.slice(0, 2) + '/' + d.slice(2) : d;
   }
 

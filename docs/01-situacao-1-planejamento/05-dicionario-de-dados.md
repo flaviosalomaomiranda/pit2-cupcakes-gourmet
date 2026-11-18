@@ -59,7 +59,7 @@ Pessoa que realiza o pedido (compra como convidado no MVP).
 | `id` | INTEGER | Não | PK | Identificador do cliente. |
 | `nome` | TEXT | Não | CHECK | Nome completo. |
 | `telefone` | TEXT | Não | CHECK | Celular/telefone só com dígitos (DDD + número). |
-| `email` | TEXT | Não | CHECK | E-mail em minúsculas. |
+| `email` | TEXT | Não | CHECK, DEFAULT '' | E-mail em minúsculas. |
 | `criado_em` | TEXT | Não | DEFAULT (strftime('%Y-%m-%dT%H:%M:%SZ', 'now')) | Data/hora de cadastro (UTC, ISO-8601). |
 
 Índices: `ix_cliente_email`

@@ -80,5 +80,5 @@ Cadastro e login de cliente, gateway de pagamento real, cadastro de produtos pel
 | RNF03 Acessibilidade | Navegável por teclado e leitor de tela | HTML semântico, `aria-live`, `aria-invalid`, link "pular para o conteúdo", foco visível, `prefers-reduced-motion` |
 | RNF04 Segurança | Proteger dados e transações | CSRF em todo POST; CSP restritiva; SQL parametrizado; senha em hash; limite de 5 tentativas de login; cartão nunca armazenado |
 | RNF05 Confiabilidade | Pedido nunca fica pela metade | Criação transacional (commit/rollback) e restrições `CHECK`/`FK` no banco |
-| RNF06 Manutenibilidade | Fácil de evoluir | MVC, regras puras isoladas em `services/`, 111 testes automatizados, cobertura de 93% |
+| RNF06 Manutenibilidade | Fácil de evoluir | MVC, regras puras isoladas em `services/`, 121 testes automatizados, cobertura de 93% |
 | RNF07 Degradação graciosa | Funcionar mesmo com o JavaScript desligado | Tudo funciona por formulários; o JS só acelera |
